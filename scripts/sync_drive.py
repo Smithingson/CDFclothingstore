@@ -5,7 +5,7 @@ Output:        <site>/uploads/<garment>/<n>.png (cropped) and <site>/uploads.jso
 
 Usage: python scripts/sync_drive.py <site dir>
 Env:   GDRIVE_SA_KEY   service-account JSON key (if missing, no uploads are added)
-       DRIVE_FOLDER_ID id of the "CDF Clothing Uploads" folder
+       DRIVE_FOLDER_ID id of the "Larovan Uniform Generator Uploads" folder
 """
 import io
 import json
