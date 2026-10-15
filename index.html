@@ -174,39 +174,16 @@ const titleCase = s => s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 const uploadsP = fetch("uploads.json", { cache: "no-store" }).then(r => r.ok ? r.json() : {}).catch(() => ({}));
 const layerSrc = (f, l) => l.src || `layers/${f}/${l.id}.png`;
 
-// M is the layout: section order, stacking order, pick-one groups and starting selections, matched to Drive files by name.
-// Layout items take their image from Drive and disappear if their file is gone.
-// Other Drive items go on top of their section's stack; a new section sits above all clothing, under the background.
+// Uploaded items go on top of their section's stack; a new section sits above all clothing, under the background.
 function mergeUploads(f, list) {
   const layers = M[f].layers, secs = M[f].sections;
-  const key = (s, n) => s.trim().toLowerCase() + "\u0000" + n.trim().toLowerCase();
-  const drive = new Map();
-  for (const s of list) for (const it of s.items) drive.set(key(s.section, it.name), it);
-  for (const sec of secs) {
-    sec.items = sec.items.filter(id => {
-      const l = byId(f, id);
-      if (l.fixed) return true;
-      const it = drive.get(key(sec.name, l.name));
-      if (!it) { layers.splice(layers.indexOf(l), 1); return false; }
-      Object.assign(l, { src: it.src, x: it.x, y: it.y });
-      drive.delete(key(sec.name, l.name));
-      return true;
-    });
-  }
-  // Index of the highest layer in this section or any section below it.
-  const topOf = si => {
-    for (let i = si; i >= 0; i--) if (secs[i].items.length) return Math.max(...secs[i].items.map(id => layers.findIndex(l => l.id === id)));
-    return -1;
-  };
   let next = 1000;
   for (const s of list) {
-    const items = s.items.filter(it => drive.has(key(s.section, it.name)))
-      .map(it => ({ id: next++, name: it.name, x: it.x, y: it.y, on: false, group: null, src: it.src }));
-    if (!items.length) continue;
-    const si = secs.findIndex(x => x.name.trim().toLowerCase() === s.section.trim().toLowerCase());
-    const sec = secs[si];
+    const items = s.items.map(it => ({ id: next++, name: it.name, x: it.x, y: it.y, on: false, group: null, src: it.src }));
+    const sec = secs.find(x => x.name.trim().toLowerCase() === s.section.trim().toLowerCase());
     if (sec) {
-      layers.splice(topOf(si) + 1, 0, ...items);
+      const top = Math.max(...sec.items.map(id => layers.findIndex(l => l.id === id)));
+      layers.splice(top + 1, 0, ...items);
       sec.items.push(...items.map(i => i.id));
     } else {
       layers.splice(layers.findIndex(l => l.fixed), 0, ...items);
