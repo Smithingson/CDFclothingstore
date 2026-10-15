@@ -10,6 +10,8 @@ Artwork: Created by SkavenBlight & xLuckySam · Formatted by Smithingson · City
 
 Players can press **Add PNG** under "Your items" to layer their own 585×559 PNGs on top of the generator items. The files stay in their browser, are never uploaded, and clear on reload.
 
+**Download layers** saves the ticked items (not the frame) as a .zip of full 585×559 PNGs, numbered from the bottom layer (01) up, in the same format the Drive folder and Add PNG accept.
+
 ## Adding items (for clothing creators)
 
 Drop PNGs into the shared Google Drive folder **Larovan Uniform Generator Uploads**. The site picks them up within an hour.
