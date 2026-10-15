@@ -181,16 +181,42 @@ function parse(name) {
 }
 const titleCase = s => s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 
+// Creator uploads from Google Drive (uploads.json is written by the deploy workflow; absent = none).
+const uploadsP = fetch("uploads.json", { cache: "no-store" }).then(r => r.ok ? r.json() : {}).catch(() => ({}));
+const layerSrc = (f, l) => l.src || `layers/${f}/${l.id}.png`;
+
+// Uploaded items go on top of their section's stack; a new section sits above all clothing, under the background.
+function mergeUploads(f, list) {
+  const layers = M[f].layers, secs = M[f].sections;
+  let next = 1000;
+  for (const s of list) {
+    const items = s.items.map(it => ({ id: next++, name: it.name, x: it.x, y: it.y, on: false, group: null, src: it.src }));
+    const sec = secs.find(x => x.name.trim().toLowerCase() === s.section.trim().toLowerCase());
+    if (sec) {
+      const top = Math.max(...sec.items.map(id => layers.findIndex(l => l.id === id)));
+      layers.splice(top + 1, 0, ...items);
+      sec.items.push(...items.map(i => i.id));
+    } else {
+      layers.splice(layers.findIndex(l => l.fixed), 0, ...items);
+      const layout = secs.findIndex(x => x.items.some(id => byId(f, id)?.fixed));
+      secs.splice(layout, 0, { name: s.section, items: items.map(i => i.id) });
+    }
+  }
+}
+
 for (const f of Object.keys(M)) {
-  state.on[f] = new Set(M[f].layers.filter(l => l.on).map(l => l.id));
-  for (const l of M[f].layers) Object.assign(l, parse(l.name));
-  state.ready[f] = Promise.all(M[f].layers.map(l => new Promise((res, rej) => {
-    const img = new Image();
-    img.onload = () => res();
-    img.onerror = () => rej(new Error(l.name));
-    img.src = `layers/${f}/${l.id}.png`;
-    (state.imgs[f] ||= {})[l.id] = img;
-  })));
+  state.ready[f] = uploadsP.then(u => {
+    mergeUploads(f, u[f] || []);
+    state.on[f] = new Set(M[f].layers.filter(l => l.on).map(l => l.id));
+    for (const l of M[f].layers) Object.assign(l, parse(l.name));
+    return Promise.all(M[f].layers.map(l => new Promise((res, rej) => {
+      const img = new Image();
+      img.onload = () => res();
+      img.onerror = () => rej(new Error(l.name));
+      img.src = layerSrc(f, l);
+      (state.imgs[f] ||= {})[l.id] = img;
+    })));
+  });
 }
 
 const $ = id => document.getElementById(id);
@@ -242,7 +268,7 @@ function row(f, l, type, groupName) {
   const thumb = document.createElement("span");
   thumb.className = "thumb";
   const img = document.createElement("img");
-  img.src = `layers/${f}/${l.id}.png`;
+  img.src = layerSrc(f, l);
   img.alt = "";
   img.loading = "lazy";
   thumb.append(img);
@@ -386,6 +412,8 @@ function update() { draw(); status(); counts(); drawShowcase(); }
 async function show(f) {
   state.file = f;
   document.querySelectorAll(".switch button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.file === f)));
+  await uploadsP;
+  if (state.file !== f) return;
   renderList();
   counts();
   $("save").disabled = true;

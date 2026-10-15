@@ -1,0 +1,50 @@
+name: Build and deploy site
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 * * * *"   # hourly, picks up new Drive uploads
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install google-auth==2.35.0 requests==2.32.3 pillow==11.0.0
+      - name: Copy site files
+        run: |
+          mkdir _site
+          cp -r index.html layers showcaseTemplate.png _site/
+      - name: Pull creator uploads from Google Drive
+        env:
+          GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
+          DRIVE_FOLDER_ID: 1v0W90mx-623GiSRIsyEZnilkfiKGr_Ka
+        run: python scripts/sync_drive.py _site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
