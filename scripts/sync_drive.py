@@ -147,6 +147,11 @@ def main():
     if summary:
         with open(summary, "a", encoding="utf-8") as fh:
             fh.write(report + "\n")
+    # Every item, originals included, comes from Drive, so an empty result means the
+    # key or folder sharing is broken. Fail so the last good deploy stays live.
+    if added == 0:
+        print("::error::No items came back from Google Drive. Check the GDRIVE_SA_KEY secret and that the folder is shared with the service account.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
