@@ -67,6 +67,14 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .pill { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: var(--warn-bg); color: var(--warn); font: 500 12px/1.4 var(--mono); }
 .save { font: 700 16px/1 var(--body); border: 0; border-radius: 6px; background: var(--accent); color: var(--accent-ink); padding: 12px 20px; cursor: pointer; }
 .save:disabled { opacity: .55; cursor: progress; }
+.showcase { display: grid; gap: 10px; }
+.showcase figure { background: var(--panel); }
+.showcase canvas { aspect-ratio: 700 / 373; }
+.save.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 11px 19px; }
+.skin { display: flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono); color: var(--muted); }
+.skin input { font: 500 14px/1 var(--mono); width: 10ch; padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); }
+.skin input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.skin input[aria-invalid="true"] { border-color: var(--warn); color: var(--warn); }
 .msg { margin: 0; font-size: 14px; color: var(--muted); }
 .warn { margin: 0; padding: 10px 12px; border-radius: 6px; background: var(--warn-bg); color: var(--warn); font-size: 14px; }
 .steps { margin: 0; padding: 12px 14px 12px 34px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); font-size: 14px; color: var(--muted); display: grid; gap: 4px; }
@@ -107,7 +115,7 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
   .side { display: contents; }
   .side > * + *, .list { margin-top: 14px; }
   .stage { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--bg); padding-block: 8px; }
-  figure { max-width: min(100%, calc(34vh * 585 / 559)); margin-inline: auto; }
+  .stage figure { max-width: min(100%, calc(34vh * 585 / 559)); margin-inline: auto; }
   .items, .pick { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) { .sec h2::before { transition: none; } }
@@ -129,6 +137,13 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
 
   <main class="grid">
     <aside class="side">
+      <div class="showcase">
+        <figure><canvas id="sc" width="700" height="373" aria-label="Outfit showcase"></canvas></figure>
+        <div class="bar">
+          <label class="skin" for="skin">Skin <input id="skin" type="text" value="#EAB892" maxlength="7" spellcheck="false" autocomplete="off"></label>
+          <button class="save alt" id="save-sc" type="button" disabled>Download showcase</button>
+        </div>
+      </div>
       <div class="stage">
         <figure><canvas id="out" width="585" height="559" aria-label="Uniform preview"></canvas></figure>
         <div class="bar">
@@ -148,7 +163,7 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
     <section class="list" id="list" aria-label="Layers"></section>
   </main>
 
-  <footer>Artwork: Created by SkavenBlight &amp; xLuckySam · Formatted by Smithingson · City Watch by NicolasCageGaming</footer>
+  <footer>Artwork: Created by SkavenBlight &amp; xLuckySam · Formatted by Smithingson · City Watch by NicolasCageGaming · Showcase card from the Larova Showcase Generator</footer>
 </div>
 
 <script>
@@ -320,7 +335,53 @@ function counts() {
   });
 }
 
-function update() { draw(); status(); counts(); }
+// Showcase: slices of the shirt/pants templates arranged on the Larova showcase card (coordinates from the Larova Showcase Generator).
+const SC = {
+  shirt: [[151,355,64,31],[231,74,128,160],[217,355,64,96],[308,355,64,288],[440,355,64,353],[427,74,128,417],[85,355,64,545],[374,355,64,610]].map(([sx,sy,sw,dx]) => ({ sx, sy, sw, dx, dy: 18 })),
+  pants: [[151,355,64,31,146],[217,355,64,160,146],[308,355,64,224,146],[231,74,128,160,18],[440,355,64,417,146],[85,355,64,481,146],[427,74,128,417,18],[374,355,64,610,146]].map(([sx,sy,sw,dx,dy]) => ({ sx, sy, sw, dx, dy })),
+  skin: [[31,18,64,256],[96,18,256,128],[160,18,128,256],[353,18,256,128],[417,18,128,256],[610,18,64,256]],
+};
+const scCard = new Image();
+const scCardReady = new Promise((res, rej) => { scCard.onload = res; scCard.onerror = rej; });
+scCard.src = "showcaseTemplate.png";
+const garments = {};
+let skin = "#EAB892", scReady = false;
+
+function garment(f) {
+  const c = garments[f] ||= Object.assign(document.createElement("canvas"), { width: M[f].w, height: M[f].h });
+  const ctx = c.getContext("2d");
+  ctx.clearRect(0, 0, c.width, c.height);
+  for (const l of M[f].layers) if (state.on[f].has(l.id)) ctx.drawImage(state.imgs[f][l.id], l.x, l.y);
+  return c;
+}
+
+function drawShowcase() {
+  if (!scReady) return;
+  const ctx = $("sc").getContext("2d");
+  ctx.clearRect(0, 0, 700, 373);
+  ctx.drawImage(scCard, 0, 0);
+  ctx.fillStyle = skin;
+  for (const [x, y, w, h] of SC.skin) ctx.fillRect(x, y, w, h);
+  for (const f of ["pants", "shirt"]) {
+    const g = garment(f);
+    for (const { sx, sy, sw, dx, dy } of SC[f]) ctx.drawImage(g, sx, sy, sw, 128, dx, dy, sw, 128);
+  }
+}
+
+Promise.all([state.ready.shirt, state.ready.pants, scCardReady]).then(() => {
+  scReady = true;
+  drawShowcase();
+  $("save-sc").disabled = false;
+}, () => {});
+
+$("skin").addEventListener("input", e => {
+  const v = e.target.value.trim().replace(/^#?/, "#");
+  const ok = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v);
+  e.target.setAttribute("aria-invalid", String(!ok));
+  if (ok) { skin = v; drawShowcase(); }
+});
+
+function update() { draw(); status(); counts(); drawShowcase(); }
 
 async function show(f) {
   state.file = f;
@@ -343,17 +404,19 @@ async function show(f) {
 
 document.querySelectorAll(".switch button").forEach(b => b.addEventListener("click", () => show(b.dataset.file)));
 
-$("save").addEventListener("click", async () => {
-  draw();
-  const blob = await new Promise(r => $("out").toBlob(r, "image/png"));
+async function saveCanvas(canvas, filename) {
+  const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = FILES[state.file];
+  a.download = filename;
   document.body.append(a);
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 10000);
-});
+}
+
+$("save").addEventListener("click", () => { draw(); saveCanvas($("out"), FILES[state.file]); });
+$("save-sc").addEventListener("click", () => { drawShowcase(); saveCanvas($("sc"), "Larovan Showcase.png"); });
 
 show("shirt");
 </script>
