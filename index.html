@@ -7,39 +7,28 @@
 <title>Larovan Uniform Generator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Metamorphous&display=swap">
 <style>
 /* Layout: sticky preview + save on the left, layer sections on the right; stacks on phones with a sticky preview. */
+/* Single Larova look: green background, darker green boxes, gold Metamorphous headings, parchment Georgia text. */
 :root {
-  --bg: #e4e6de;
-  --panel: #f2f3ed;
-  --ink: #1e2921;
-  --muted: #5a675d;
-  --line: #c6cbbf;
-  --accent: #3b5a45;
-  --accent-ink: #f2f3ed;
-  --gold: #9a7a3a;
-  --tint: #dfe7dd;
-  --warn: #8f4318;
-  --warn-bg: #f5e3d6;
-  --check-a: #d9dcd3;
-  --check-b: #ecede7;
-  --display: "IM Fell English SC", "Iowan Old Style", Georgia, serif;
-  --body: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #131915; --panel: #1b231e; --ink: #e2e6dc; --muted: #98a59b; --line: #2f3b33;
-    --accent: #8db699; --accent-ink: #102015; --gold: #d0ae69; --tint: #213027;
-    --warn: #f0a77a; --warn-bg: #3a2418; --check-a: #232c26; --check-b: #2b352e;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #131915; --panel: #1b231e; --ink: #e2e6dc; --muted: #98a59b; --line: #2f3b33;
-  --accent: #8db699; --accent-ink: #102015; --gold: #d0ae69; --tint: #213027;
-  --warn: #f0a77a; --warn-bg: #3a2418; --check-a: #232c26; --check-b: #2b352e;
+  --bg: #505E50;
+  --panel: #4A564A;
+  --ink: #C2BEB0;
+  --muted: #C2BEB0;
+  --big: #BFA972;
+  --line: #68766A;
+  --accent: #BFA972;
+  --accent-ink: #2E362E;
+  --gold: #BFA972;
+  --tint: #5D6C5C;
+  --warn: #F0B48C;
+  --warn-bg: #5E4A3C;
+  --check-a: #465246;
+  --check-b: #525F52;
+  --display: "Metamorphous", Georgia, serif;
+  --body: Georgia, "Times New Roman", serif;
+  --mono: Georgia, "Times New Roman", serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -48,8 +37,8 @@ body { background: var(--bg); color: var(--ink); font: 16px/1.45 var(--body); }
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
 .top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
-.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 0 0 6px; }
-h1 { font: 400 clamp(28px, 4vw, 40px)/1.05 var(--display); margin: 0; text-wrap: balance; }
+.eyebrow { font: 700 13px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--big); margin: 0 0 6px; }
+h1 { font: 700 clamp(28px, 4vw, 40px)/1.05 var(--display); color: var(--big); margin: 0; text-wrap: balance; }
 
 .switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--panel); }
 .switch button { font: 500 15px/1 var(--body); border: 0; background: transparent; color: var(--muted); padding: 9px 18px; border-radius: 999px; cursor: pointer; }
@@ -72,7 +61,7 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .showcase canvas { aspect-ratio: 700 / 373; }
 .save.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 11px 19px; }
 .skin { display: flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono); color: var(--muted); }
-.skin input { font: 500 14px/1 var(--mono); width: 10ch; padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); }
+.skin input { font: 500 14px/1 var(--mono); width: 7.5em; padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); }
 .skin input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
 .skin input[aria-invalid="true"] { border-color: var(--warn); color: var(--warn); }
 .msg { margin: 0; font-size: 14px; color: var(--muted); }
@@ -85,13 +74,13 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .sec > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 14px; }
 .sec > summary::-webkit-details-marker { display: none; }
 .sec > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
-.sec h2 { margin: 0; font: 400 19px/1.2 var(--display); letter-spacing: .02em; }
+.sec h2 { margin: 0; font: 700 19px/1.2 var(--display); color: var(--big); letter-spacing: .02em; }
 .sec h2::before { content: "\25B8"; font-family: var(--body); display: inline-block; width: 1em; color: var(--gold); transition: transform .15s; }
 .sec[open] h2::before { transform: rotate(90deg); }
 .sec .n { font: 500 12px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; padding: 0 12px 12px; }
 .pick { grid-column: 1 / -1; border: 1px dashed var(--line); border-radius: 6px; margin: 0; padding: 8px; display: grid; grid-template-columns: repeat(auto-fill, minmax(234px, 1fr)); gap: 8px; }
-.pick legend { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); padding: 0 6px; }
+.pick legend { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 6px; }
 
 .row { display: grid; grid-template-columns: auto 48px minmax(0, 1fr); align-items: center; gap: 10px; padding: 6px 10px 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); cursor: pointer; min-height: 60px; }
 .row:has(input:checked) { border-color: var(--accent); background: var(--tint); }
@@ -105,7 +94,7 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .lbl { min-width: 0; display: grid; gap: 3px; }
 .lbl b { font-weight: 500; overflow-wrap: anywhere; }
 .chips { display: flex; flex-wrap: wrap; gap: 4px; }
-.chip { font: 500 11px/1.5 var(--mono); padding: 0 6px; border-radius: 3px; border: 1px solid var(--line); color: var(--gold); }
+.chip { font: 500 11px/1.5 var(--mono); padding: 0 6px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
 .note { font-size: 12.5px; color: var(--warn); }
 
 footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
