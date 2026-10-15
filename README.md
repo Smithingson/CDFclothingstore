@@ -24,7 +24,9 @@ Larovan Uniform Generator Uploads/
 - **Folder = section.** Use an existing section folder, or make a new folder under Shirt or Pants to create a new section.
 - New items appear **on top of their section** and start unticked.
 - Under 5 MB, and no two files with the same name in one section.
-- To remove an item, delete the file from Drive.
+- To remove an item, delete the file from Drive. To update one, replace the file, keeping the same name.
+- The original Larovan items live in these folders too. Their stacking order, pick-one groups and starting picks are remembered by name in `index.html`, so renaming an original makes it a new, unticked item on top of its section.
+- The Larova Background frame and the showcase card stay in this repo and can't be changed from Drive.
 
 Files that break a rule are skipped. The reason is listed in the latest run under the repo's **Actions** tab.
 
