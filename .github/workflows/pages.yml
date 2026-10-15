@@ -32,7 +32,7 @@ jobs:
       - name: Pull creator uploads from Google Drive
         env:
           GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
-          DRIVE_FOLDER_ID: 1v0W90mx-623GiSRIsyEZnilkfiKGr_Ka
+          DRIVE_FOLDER_ID: 1YnI8ISkarL9pbZkGeowMW9t8KYZBJsp8
         run: python scripts/sync_drive.py _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
