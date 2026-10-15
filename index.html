@@ -60,6 +60,11 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .showcase figure { background: var(--panel); }
 .showcase canvas { aspect-ratio: 700 / 373; }
 .save.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 11px 19px; }
+.add { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.add .msg { flex: 1 1 220px; min-width: 0; }
+.add .msg.err { color: var(--warn); }
+.remove { justify-self: start; font: 13px/1.2 var(--body); background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.remove:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .skin { display: flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono); color: var(--muted); }
 .skin input { font: 500 14px/1 var(--mono); width: 7.5em; padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); }
 .skin input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
@@ -219,6 +224,8 @@ function mergeUploads(f, list) {
 for (const f of Object.keys(M)) {
   state.ready[f] = uploadsP.then(u => {
     mergeUploads(f, u[f] || []);
+    const secs = M[f].sections;
+    secs.splice(secs.findIndex(x => x.items.some(id => byId(f, id)?.fixed)), 0, { name: "Your items", items: [], custom: true });
     state.on[f] = new Set(M[f].layers.filter(l => l.on).map(l => l.id));
     for (const l of M[f].layers) Object.assign(l, parse(l.name));
     return Promise.all(M[f].layers.map(l => new Promise((res, rej) => {
@@ -332,7 +339,7 @@ function renderList() {
   list.replaceChildren();
   for (const s of [...M[f].sections].reverse()) {
     const items = s.items.map(id => byId(f, id)).filter(l => !l.fixed).reverse();
-    if (!items.length) continue;
+    if (!items.length && !s.custom) continue;
     const sec = document.createElement("details");
     sec.className = "sec";
     sec.open = true;
@@ -345,6 +352,22 @@ function renderList() {
     sum.append(h, n);
     const grid = document.createElement("div");
     grid.className = "items";
+    if (s.custom) {
+      grid.append(addControls(f));
+      for (const l of items) {
+        const r = row(f, l, "checkbox");
+        const rm = document.createElement("button");
+        rm.type = "button";
+        rm.className = "remove";
+        rm.textContent = "Remove";
+        rm.addEventListener("click", e => { e.preventDefault(); removeCustom(f, l.id); });
+        r.querySelector(".lbl").append(rm);
+        grid.append(r);
+      }
+      sec.append(sum, grid);
+      list.append(sec);
+      continue;
+    }
     const seen = new Set();
     for (const l of items) {
       if (!l.group) { grid.append(row(f, l, "checkbox")); continue; }
@@ -364,10 +387,71 @@ function renderList() {
   }
 }
 
+// Player's own PNGs: kept in this browser only (blob URLs), stacked above all items under the frame, gone on reload.
+let nextCustom = 5000;
+const addMsg = {};
+
+function addControls(f) {
+  const wrap = document.createElement("div");
+  wrap.className = "add";
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/png";
+  input.multiple = true;
+  input.id = `add-${f}`;
+  input.hidden = true;
+  input.addEventListener("change", () => { addCustom(f, [...input.files]); input.value = ""; });
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "save alt";
+  btn.textContent = "Add PNG";
+  btn.addEventListener("click", () => input.click());
+  const note = document.createElement("p");
+  note.className = addMsg[f] ? "msg err" : "msg";
+  note.textContent = addMsg[f] || `Your own ${M[f].w}×${M[f].h} transparent PNGs. They stay on this device and clear when you reload.`;
+  wrap.append(btn, input, note);
+  return wrap;
+}
+
+async function addCustom(f, files) {
+  const errors = [];
+  for (const file of files) {
+    if (file.type !== "image/png") { errors.push(`${file.name} isn't a PNG.`); continue; }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    const ok = await new Promise(r => { img.onload = () => r(true); img.onerror = () => r(false); img.src = url; });
+    if (!ok || img.naturalWidth !== M[f].w || img.naturalHeight !== M[f].h) {
+      errors.push(ok ? `${file.name} is ${img.naturalWidth}×${img.naturalHeight}; it must be ${M[f].w}×${M[f].h}.` : `${file.name} couldn't be read.`);
+      URL.revokeObjectURL(url);
+      continue;
+    }
+    const l = Object.assign({ id: nextCustom++, name: file.name.replace(/\.png$/i, ""), x: 0, y: 0, on: true, group: null, src: url }, parse(file.name.replace(/\.png$/i, "")));
+    const layers = M[f].layers;
+    layers.splice(layers.findIndex(o => o.fixed), 0, l);
+    M[f].sections.find(s => s.custom).items.push(l.id);
+    state.imgs[f][l.id] = img;
+    state.on[f].add(l.id);
+  }
+  addMsg[f] = errors.join(" ");
+  if (state.file === f) { renderList(); update(); }
+}
+
+function removeCustom(f, id) {
+  const layers = M[f].layers, l = byId(f, id), sec = M[f].sections.find(s => s.custom);
+  layers.splice(layers.indexOf(l), 1);
+  sec.items = sec.items.filter(i => i !== id);
+  state.on[f].delete(id);
+  delete state.imgs[f][id];
+  URL.revokeObjectURL(l.src);
+  addMsg[f] = "";
+  renderList();
+  update();
+}
+
 function counts() {
   const f = state.file;
   document.querySelectorAll(".sec").forEach(sec => {
-    const ids = sec.dataset.items.split(",").map(Number);
+    const ids = sec.dataset.items ? sec.dataset.items.split(",").map(Number) : [];
     const k = ids.filter(id => state.on[f].has(id)).length;
     sec.querySelector(".n").textContent = `${k} of ${ids.length}`;
   });

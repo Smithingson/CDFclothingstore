@@ -6,6 +6,10 @@ Site: https://smithingson.github.io/LarovanUniformGenerator/
 
 Artwork: Created by SkavenBlight & xLuckySam · Formatted by Smithingson · City Watch by NicolasCageGaming · Showcase card from the Larova Showcase Generator
 
+## Your own PNGs (for players)
+
+Players can press **Add PNG** under "Your items" to layer their own 585×559 PNGs on top of the generator items. The files stay in their browser, are never uploaded, and clear on reload.
+
 ## Adding items (for clothing creators)
 
 Drop PNGs into the shared Google Drive folder **Larovan Uniform Generator Uploads**. The site picks them up within an hour.
