@@ -1,6 +1,6 @@
 # Larovan Uniform Generator
 
-Pick shirt and pants layers for the City of Larova uniforms (Larovan, City Watch, Dasmant and Jequis), preview the outfit showcase, and download the finished PNGs for Roblox.
+Pick shirt and pants layers for the City of Larova uniforms (Ingeld, City Watch, Dasmant and Jequis), preview the outfit showcase, and download the finished PNGs for Roblox.
 
 The branch buttons switch which items and frame you see. The outfit is shared, so ticked items stay ticked when you switch, but items from different branches can't be worn together and the page warns when they are. **Use [branch] defaults** loads a branch's standard uniform.
 
@@ -20,7 +20,7 @@ Drop PNGs into the shared Google Drive folder **Larovan Uniform Generator Upload
 
 ```
 Larovan Uniform Generator Uploads/
-  Larovan/
+  Ingeld/
     Shirt/
       4. CHEST ARMOR & ACCESSORIES/
         Bannerman Tabard.png      ← appears as "Bannerman Tabard"
