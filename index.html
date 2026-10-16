@@ -125,8 +125,8 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
       <h1>Larovan Uniform Generator</h1>
     </div>
     <div class="switch" role="group" aria-label="Garment">
-      <button id="tab-shirt" type="button" aria-pressed="true" data-file="shirt">Shirt</button>
-      <button id="tab-pants" type="button" aria-pressed="false" data-file="pants">Pants</button>
+      <button id="tab-shirt" type="button" aria-pressed="true" data-file="shirt" title="Pick items for the shirt (torso and arms)">Shirt</button>
+      <button id="tab-pants" type="button" aria-pressed="false" data-file="pants" title="Pick items for the pants (legs and lower torso)">Pants</button>
     </div>
   </header>
 
@@ -135,8 +135,8 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
       <div class="showcase">
         <figure><canvas id="sc" width="700" height="373" aria-label="Outfit showcase"></canvas></figure>
         <div class="bar">
-          <label class="skin" for="skin">Skin <input id="skin" type="text" value="#EAB892" maxlength="7" spellcheck="false" autocomplete="off"></label>
-          <button class="save alt" id="save-sc" type="button" disabled>Download showcase</button>
+          <label class="skin" for="skin" title="Skin color shown behind the clothes in the showcase. Type a hex code like #EAB892.">Skin <input id="skin" type="text" value="#EAB892" maxlength="7" spellcheck="false" autocomplete="off"></label>
+          <button class="save alt" id="save-sc" type="button" disabled title="Save the front, back and side showcase of this outfit as a PNG">Download showcase</button>
         </div>
       </div>
       <div class="stage">
@@ -144,8 +144,8 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
         <div class="bar">
           <span class="count" id="count">Loading layers…</span>
           <span class="btns">
-            <button class="save alt" id="save-layers" type="button" disabled>Download layers</button>
-            <button class="save" id="save" type="button" disabled>Download PNG</button>
+            <button class="save alt" id="save-layers" type="button" disabled title="Save each ticked item as its own 585×559 PNG in a .zip, numbered from the bottom layer up">Download layers</button>
+            <button class="save" id="save" type="button" disabled title="Save the finished template as a PNG, ready to send for approval and upload to Roblox">Download PNG</button>
           </span>
         </div>
       </div>
@@ -350,6 +350,7 @@ function renderList() {
     sec.open = true;
     sec.dataset.items = items.map(l => l.id).join(",");
     const sum = document.createElement("summary");
+    sum.title = "Show or hide this section";
     const h = document.createElement("h2");
     h.textContent = s.name;
     const n = document.createElement("span");
@@ -365,6 +366,7 @@ function renderList() {
         rm.type = "button";
         rm.className = "remove";
         rm.textContent = "Remove";
+        rm.title = "Remove this PNG from your outfit";
         rm.addEventListener("click", e => { e.preventDefault(); removeCustom(f, l.id); });
         r.querySelector(".lbl").append(rm);
         grid.append(r);
@@ -410,6 +412,7 @@ function addControls(f) {
   btn.type = "button";
   btn.className = "save alt";
   btn.textContent = "Add PNG";
+  btn.title = `Add your own ${M[f].w}×${M[f].h} transparent PNGs on top of the outfit. They stay on this device.`;
   btn.addEventListener("click", () => input.click());
   const note = document.createElement("p");
   note.className = addMsg[f] ? "msg err" : "msg";
