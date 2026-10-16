@@ -1,6 +1,8 @@
 # Larovan Uniform Generator
 
-Pick shirt and pants layers for the City of Larova uniform, preview the outfit showcase, and download the finished PNGs for Roblox.
+Pick shirt and pants layers for the City of Larova uniforms (Larovan, City Watch, Dasmant and Jequis), preview the outfit showcase, and download the finished PNGs for Roblox.
+
+The branch buttons switch which items and frame you see. The outfit is shared, so ticked items stay ticked when you switch, but items from different branches can't be worn together and the page warns when they are. **Use [branch] defaults** loads a branch's standard uniform.
 
 Site: https://smithingson.github.io/LarovanUniformGenerator/
 
@@ -18,21 +20,23 @@ Drop PNGs into the shared Google Drive folder **Larovan Uniform Generator Upload
 
 ```
 Larovan Uniform Generator Uploads/
-  Shirt/
-    4. CHEST ARMOR & ACCESSORIES/
-      Bannerman Tabard.png      ← appears as "Bannerman Tabard"
-  Pants/
-    ...
+  Larovan/
+    Shirt/
+      4. CHEST ARMOR & ACCESSORIES/
+        Bannerman Tabard.png      ← appears as "Bannerman Tabard"
+    Pants/
+      ...
+  City Watch/   Dasmant/   Jequis/   (same Shirt/Pants/section layout)
 ```
 
 - **One item per PNG**, exactly **585×559** (the Roblox template), transparent everywhere except the item, just like a layer in the .pdn generator.
 - **File name = item name.** Tags in brackets show as badges, e.g. `[MR2] Loyalty Sash.png`.
-- **Folder = section.** Use an existing section folder, or make a new folder under Shirt or Pants to create a new section.
+- **Folder = section.** Put files in the right branch, then Shirt or Pants, then a section folder. A new section folder creates a new section in that branch.
 - New items appear **on top of their section** and start unticked.
 - Under 5 MB, and no two files with the same name in one section.
 - To remove an item, delete the file from Drive. To update one, replace the file, keeping the same name.
-- The original Larovan items live in these folders too. If Drive returns no items at all, the update stops and the site keeps its last version. Their stacking order, pick-one groups and starting picks are remembered by name in `index.html`, so renaming an original makes it a new, unticked item on top of its section.
-- The Larova Background frame and the showcase card stay in this repo and can't be changed from Drive.
+- The original items of every branch live in these folders too. If Drive returns no items at all, the update stops and the site keeps its last version. Their stacking order, pick-one groups and starting picks are remembered by name in `index.html`, so renaming an original makes it a new, unticked item on top of its section.
+- Each branch's background frame, the branch buttons and the showcase card stay in this repo and can't be changed from Drive.
 
 Files that break a rule are skipped. The reason is listed in the latest run under the repo's **Actions** tab.
 
