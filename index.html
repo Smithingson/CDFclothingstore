@@ -57,6 +57,7 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .save { font: 700 16px/1 var(--body); border: 0; border-radius: 6px; background: var(--accent); color: var(--accent-ink); padding: 12px 20px; cursor: pointer; }
 .save:disabled { opacity: .55; cursor: progress; }
 .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.tally { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .showcase { display: grid; gap: 10px; }
 .showcase figure { background: var(--panel); }
 .showcase canvas { aspect-ratio: 700 / 373; }
@@ -64,8 +65,8 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .add { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
 .add .msg { flex: 1 1 220px; min-width: 0; }
 .add .msg.err { color: var(--warn); }
-.remove { justify-self: start; font: 13px/1.2 var(--body); background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; }
-.remove:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.remove, .link { justify-self: start; font: 13px/1.2 var(--body); background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.remove:focus-visible, .link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .skin { display: flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono); color: var(--muted); }
 .skin input { font: 500 14px/1 var(--mono); width: 7.5em; padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); }
 .skin input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
@@ -142,7 +143,7 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
       <div class="stage">
         <figure><canvas id="out" width="585" height="559" aria-label="Uniform preview"></canvas></figure>
         <div class="bar">
-          <span class="count" id="count">Loading layers…</span>
+          <span class="tally"><span class="count" id="count">Loading layers…</span> <button class="link" id="clear" type="button" title="Untick every generator item on both the shirt and the pants. Your own PNGs stay.">Clear all</button></span>
           <span class="btns">
             <button class="save alt" id="save-layers" type="button" disabled title="Save each ticked item as its own 585×559 PNG in a .zip, numbered from the bottom layer up">Download layers</button>
             <button class="save" id="save" type="button" disabled title="Save the finished template as a PNG, ready to send for approval and upload to Roblox">Download PNG</button>
@@ -433,7 +434,7 @@ async function addCustom(f, files) {
       URL.revokeObjectURL(url);
       continue;
     }
-    const l = Object.assign({ id: nextCustom++, name: file.name.replace(/\.png$/i, ""), x: 0, y: 0, on: true, group: null, src: url }, parse(file.name.replace(/\.png$/i, "")));
+    const l = Object.assign({ id: nextCustom++, name: file.name.replace(/\.png$/i, ""), x: 0, y: 0, on: true, group: null, src: url, custom: true }, parse(file.name.replace(/\.png$/i, "")));
     const layers = M[f].layers;
     layers.splice(layers.findIndex(o => o.fixed), 0, l);
     M[f].sections.find(s => s.custom).items.push(l.id);
@@ -554,6 +555,13 @@ $("save").addEventListener("click", () => { draw(); saveCanvas($("out"), FILES[s
 $("save-sc").addEventListener("click", () => { drawShowcase(); saveCanvas($("sc"), "Larovan Showcase.png"); });
 
 // Selected items (not the frame) as full-size layer PNGs in a .zip, numbered bottom (01) to top.
+// Untick every generator item on both garments; the player's own PNGs and the frame stay.
+$("clear").addEventListener("click", () => {
+  for (const f of Object.keys(M)) for (const l of M[f].layers) if (!l.fixed && !l.custom) state.on[f]?.delete(l.id);
+  renderList();
+  update();
+});
+
 $("save-layers").addEventListener("click", async () => {
   const f = state.file, msg = $("msg"), btn = $("save-layers");
   const sel = M[f].layers.filter(l => !l.fixed && state.on[f].has(l.id));
