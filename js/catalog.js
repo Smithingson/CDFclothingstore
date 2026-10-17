@@ -25,7 +25,7 @@ const key = (section, name) => `${section.trim().toLowerCase()}\u0000${name.trim
 
 /**
  * @returns {{
- *   branches: {name, slug, button, showcase, frame: {shirt, pants}}[],
+ *   branches: {name, slug, tier, button, showcase, frame: {shirt, pants}}[],
  *   garments: {shirt: Garment, pants: Garment},
  * }}
  * Garment = { items: Item[] (every branch, drawing order), sections: Section[] }
@@ -34,7 +34,7 @@ const key = (section, name) => `${section.trim().toLowerCase()}\u0000${name.trim
  *           group is unique per branch and garment ("Ingeld/gambeson"); null when the item isn't in a pick-one group.
  */
 export function buildCatalog(config, layout, uploads) {
-  const branches = config.branches.map(b => ({ name: b.name, slug: b.slug, ...branchAssets(b.slug) }));
+  const branches = config.branches.map(b => ({ name: b.name, slug: b.slug, tier: b.tier || "noble", ...branchAssets(b.slug) }));
   let nextId = 1;
   const garments = {};
   for (const garment of GARMENTS) {

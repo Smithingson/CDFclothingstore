@@ -1,6 +1,6 @@
 # Larovan Uniform Generator
 
-Pick shirt and pants layers for the City of Larova uniforms (Ingeld, City Watch, Dasmant and Jequis), preview the outfit showcase, and download the finished PNGs for Roblox.
+Pick shirt and pants layers for the City of Larova uniforms (the noble retinues Ingeld, City Watch, Dasmant and Jequis, and the Lost Men), preview the outfit showcase, and download the finished PNGs for Roblox.
 
 The branch buttons switch which items and frame you see. The outfit is shared, so ticked items stay ticked when you switch, but items from different branches can't be worn together and the page warns when they are. **Use [branch] defaults** loads a branch's standard uniform.
 
@@ -26,7 +26,7 @@ Larovan Uniform Generator Uploads/
         Bannerman Tabard.png      ← appears as "Bannerman Tabard"
     Pants/
       ...
-  City Watch/   Dasmant/   Jequis/   (same Shirt/Pants/section layout)
+  City Watch/   Dasmant/   Jequis/   Lost Men/   (same Shirt/Pants/section layout)
 ```
 
 - **One item per PNG**, exactly **585×559** (the Roblox template), transparent everywhere except the item, just like a layer in the .pdn generator.
@@ -50,7 +50,7 @@ A static site with no build step and one outside library (JSZip, for the layers 
 
 | Where | What |
 | --- | --- |
-| `data/branches.json` | The branch tabs, in order: name and slug. Also read by the Drive sync. |
+| `data/branches.json` | The branch tabs, in order: name, slug and tier (`noble` or `lesser`; a divider separates the tiers). Also read by the Drive sync. |
 | `data/layout.json` | Per branch and garment: sections from the bottom of the stack up, each item's name, pick-one `group` and `default`. |
 | `assets/<slug>/` | Each branch's `button.png`, `shirt-frame.png`, `pants-frame.png` and `showcase.png`. |
 | `js/catalog.js` | Builds the item list from the layout plus `uploads.json`, and reads badges and rules from item names. |

@@ -428,5 +428,81 @@
         {"name":"Embroidered Avontal Karakul Longcoat Dropdown"}
       ]}
     ]
+  },
+  "Lost Men": {
+    "shirt": [
+      {"section":"BODY SHADERS", "items": [
+        {"name":"Arm Hair"},
+        {"name":"skin dirt"}
+      ]},
+      {"section":"ACCESSORIES", "items": [
+        {"name":"Stonelayer's Gloves"},
+        {"name":"Shoelace Thread"}
+      ]},
+      {"section":"CLOTHWORKS", "items": [
+        {"name":"Requisitioned Tunic","group":"lm-tunic"},
+        {"name":"Re-Dyed Lookout's Tunic","group":"lm-tunic"},
+        {"name":"Abused Gambeson","group":"lm-gambeson"},
+        {"name":"Gambeson of Malady","group":"lm-gambeson"},
+        {"name":"Milksops Gambeson","group":"lm-gambeson"}
+      ]},
+      {"section":"EQUIPMENT", "items": [
+        {"name":"Prisoner's Sash"},
+        {"name":"Equipment Belt"},
+        {"name":"Swordbelt"},
+        {"name":"Baldric"},
+        {"name":"Crossbody Belt"}
+      ]},
+      {"section":"CLOAKS", "items": [
+        {"name":"Ingeld's Favorite","group":"lm-cloak"},
+        {"name":"The Blanket","group":"lm-cloak"},
+        {"name":"The Hooded Stranger","group":"lm-cloak"}
+      ]}
+    ],
+    "pants": [
+      {"section":"BODY SHADERS", "items": [
+        {"name":"Leg Dirt"},
+        {"name":"Skin Dirt"}
+      ]},
+      {"section":"FOOTWEAR", "items": [
+        {"name":"Beggar's Stompers"}
+      ]},
+      {"section":"LEGWEAR", "items": [
+        {"name":"Plaid Slumwalkers","group":"lm-trousers"},
+        {"name":"Larovan Trousers 1","group":"lm-trousers"},
+        {"name":"Larovan Trousers 2","group":"lm-trousers"},
+        {"name":"Larovan Trousers 3","group":"lm-trousers"},
+        {"name":"Larovan Trousers 4","group":"lm-trousers"},
+        {"name":"Larovan Trousers 5","group":"lm-trousers"},
+        {"name":"Larovan Trousers 6","group":"lm-trousers"},
+        {"name":"Larovan Trousers 7","group":"lm-trousers"},
+        {"name":"Larovan Trousers 8","group":"lm-trousers"},
+        {"name":"Larovan Trousers 9","group":"lm-trousers"},
+        {"name":"Kneepatches"},
+        {"name":"Brown Leg Wraps","group":"lm-legwraps"},
+        {"name":"Bleeding Leg Wraps","group":"lm-legwraps"}
+      ]},
+      {"section":"BLOUSED FOOT & LEGWEAR", "items": [
+        {"name":"Bloused Slumwalkers"},
+        {"name":"Puttees"}
+      ]},
+      {"section":"GARMENT DROPDOWNS", "items": [
+        {"name":"Requisitioned Tunic","group":"lm-tunic"},
+        {"name":"Re-Dyed Lookout's Tunic","group":"lm-tunic"},
+        {"name":"Abused Gambeson","group":"lm-gambeson"},
+        {"name":"Gambeson of Malady","group":"lm-gambeson"},
+        {"name":"Milksops Gambeson","group":"lm-gambeson"}
+      ]},
+      {"section":"EQUIPMENT DROPDOWNS", "items": [
+        {"name":"Prisoner's Sash"},
+        {"name":"Equipment Belt"},
+        {"name":"Swordbelt"}
+      ]},
+      {"section":"CLOAK DROPDOWNS", "items": [
+        {"name":"Ingeld's Favorite","group":"lm-cloak"},
+        {"name":"The Blanket","group":"lm-cloak"},
+        {"name":"The Hooded Stranger","group":"lm-cloak"}
+      ]}
+    ]
   }
 }

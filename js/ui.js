@@ -117,13 +117,18 @@ export function updateCustomPositions(root, stack) {
   });
 }
 
+// One button per branch; a divider goes between tiers (noble retinues, then lesser ones).
 export function branchButtons(branches, onPick) {
-  return branches.map(b => {
+  return branches.flatMap((b, i) => {
     const btn = el("button", { type: "button", title: `${b.name}: show the ${b.name} items and frame` },
       el("img", { src: b.button, alt: "" }), el("span", { textContent: b.name }));
     btn.dataset.branch = b.name;
     btn.addEventListener("click", () => onPick(b.name));
-    return btn;
+    if (i === 0 || branches[i - 1].tier === b.tier) return [btn];
+    const divider = el("span", { className: "divider" });
+    divider.setAttribute("role", "separator");
+    divider.setAttribute("aria-orientation", "vertical");
+    return [divider, btn];
   });
 }
 
