@@ -112,7 +112,7 @@ function showStatus() {
   const g = view.garment, isOn = l => outfit.isOn(l);
   const n = outfit.items(g).filter(isOn).length;
   const { messages, flagged } = outfitWarnings({
-    branchNames: catalog.branches.map(b => b.name),
+    branches: catalog.branches,
     allItems: GARMENTS.flatMap(x => catalog.garments[x].items),
     garmentItems: outfit.items(g),
     isOn,

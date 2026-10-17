@@ -1,10 +1,10 @@
 {
-  "about": "One entry per branch tab, in button order. Each branch's artwork lives in assets/<slug>/ (button.png, shirt-frame.png, pants-frame.png, showcase.png), its items in data/layout.json under its name, and its Drive uploads in a Drive folder with the same name. \"tier\" groups the buttons: a divider separates the noble retinues from the lesser ones.",
+  "about": "One entry per branch tab, in button order. Each branch's artwork lives in assets/<slug>/ (button.png, shirt-frame.png, pants-frame.png, showcase.png), its items in data/layout.json under its name, and its Drive uploads in a Drive folder with the same name. \"tier\" groups the buttons: a divider separates the noble retinues from the lesser ones. Items from different branches warn when worn together, unless one branch lists the other in \"canMixWith\".",
   "branches": [
     { "name": "Ingeld", "slug": "ingeld", "tier": "noble" },
     { "name": "City Watch", "slug": "city-watch", "tier": "noble" },
     { "name": "Dasmant", "slug": "dasmant", "tier": "noble" },
     { "name": "Jequis", "slug": "jequis", "tier": "noble" },
-    { "name": "Lost Men", "slug": "lost-men", "tier": "lesser" }
+    { "name": "Lost Men", "slug": "lost-men", "tier": "lesser", "canMixWith": ["Ingeld"] }
   ]
 }

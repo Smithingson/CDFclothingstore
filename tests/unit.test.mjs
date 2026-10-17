@@ -107,12 +107,29 @@ test("rules: conflicts, missing items and mixed branches", () => {
   o.set(pants.items[1], true);
   assert.deepEqual(missing(pants.items, isOn), []);
   o.set(shirt.items[5], true);
-  const w = outfitWarnings({ branchNames: ["A", "B"], allItems: [...shirt.items, ...pants.items], garmentItems: shirt.items, isOn });
+  const w = outfitWarnings({ branches: o.catalog.branches, allItems: [...shirt.items, ...pants.items], garmentItems: shirt.items, isOn });
   assert.deepEqual(w.messages, [
     "This outfit mixes items from A and B. Items from different branches can't be worn together.",
     "Tunic and Coat 1 shouldn't be worn together.",
   ]);
   assert.equal(w.flagged.size, 2);
+});
+
+test("canMixWith lets two branches share an outfit without the mixed-branch warning", () => {
+  const cfg = { branches: [{ name: "A", slug: "a" }, { name: "B", slug: "b" }, { name: "L", slug: "l", canMixWith: ["A"] }] };
+  const lay = { ...layout, L: { shirt: [{ section: "RAGS", items: [{ name: "Rag" }] }] } };
+  const up = { ...uploads, L: { shirt: [{ section: "RAGS", items: [file("Rag", 10)] }] } };
+  const o = new Outfit(buildCatalog(cfg, lay, up));
+  const { shirt } = o.catalog.garments, isOn = l => o.isOn(l), byName = n => shirt.items.find(l => l.name === n);
+  const warn = () => outfitWarnings({ branches: o.catalog.branches, allItems: shirt.items, garmentItems: shirt.items, isOn }).messages
+    .filter(m => !m.includes("shouldn't"));
+  o.set(byName("Coat 2"), true); o.set(byName("Rag"), true);
+  assert.deepEqual(warn(), []);                                    // A + L: allowed
+  o.set(byName("Sash"), true);                                     // + B: not allowed
+  assert.deepEqual(warn(), ["This outfit mixes items from A, B and L. Items from different branches can't be worn together.",
+    "L items can only be worn with A items."]);
+  o.set(byName("Coat 2"), false); o.set(byName("Sash"), true);
+  assert.equal(warn().length, 2);                                   // B + L: not allowed
 });
 
 test("the shipped layout and branch config agree", () => {
