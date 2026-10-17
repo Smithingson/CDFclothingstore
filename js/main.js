@@ -5,7 +5,7 @@ import { GARMENTS, GARMENT_LABEL, TEMPLATE, SHOWCASE } from "./config.js";
 import { loadCatalog, parseName } from "./catalog.js";
 import { Outfit } from "./outfit.js";
 import { outfitWarnings } from "./rules.js";
-import { loadImage, drawTemplate, drawShowcase, newCanvas, canvasBlob, layersZip, saveBlob } from "./render.js";
+import { loadImage, forgetImage, drawTemplate, drawShowcase, newCanvas, canvasBlob, layersZip, saveBlob } from "./render.js";
 import { itemSections, customSection, updateCounts, updateCustomPositions, branchButtons, loadError } from "./ui.js";
 
 const $ = id => document.getElementById(id);
@@ -80,6 +80,7 @@ function showNotice(text) {
 
 function setDownloads(on) {
   $("save").disabled = $("save-layers").disabled = !on;
+  if (on && !frameImage(view.garment)) $("save").disabled = true;
   $("save-sc").disabled = !on || !images.has(branchOf(view.branch)?.showcase);
 }
 
@@ -91,6 +92,7 @@ function refresh() {
   if (!ready) return;
   const g = view.garment, stack = outfit.stack(g, view.branch);
   drawTemplate($("out"), stack, images, frameImage(g));
+  $("save").disabled = !frameImage(g);           // never hand out a template without its frame
   showStatus();
   updateCounts(document, id => outfit.on[g].has(id));
   updateCustomPositions($("mine"), stack);
@@ -98,9 +100,9 @@ function refresh() {
 }
 
 function showShowcase() {
-  const card = images.get(branchOf(view.branch).showcase);
-  $("save-sc").disabled = !ready || !card;
   if (!ready) return;
+  const card = images.get(branchOf(view.branch).showcase);
+  $("save-sc").disabled = !card;
   if (!card) { $("sc").getContext("2d").clearRect(0, 0, SHOWCASE.w, SHOWCASE.h); return; }
   for (const g of GARMENTS) drawTemplate(templates[g], outfit.stack(g, view.branch), images, frameImage(g));
   drawShowcase($("sc"), card, view.skin, templates);
@@ -146,6 +148,7 @@ function renderList() {
     onRemove: l => {
       outfit.removeCustom(l);
       images.delete(l.src);
+      forgetImage(l.src);
       URL.revokeObjectURL(l.src);
       addMsg[g] = "";
       renderList();

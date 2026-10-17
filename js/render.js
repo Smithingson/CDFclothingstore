@@ -14,6 +14,7 @@ export function loadImage(src) {
   }));
   return cache.get(src);
 }
+export const forgetImage = src => cache.delete(src);
 
 // Draw layers (bottom to top) and then the frame onto a 585×559 canvas.
 export function drawTemplate(canvas, layers, images, frame) {

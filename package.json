@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "Static site; no install needed. package.json only marks js/ and tests/ as ES modules for Node.",
+  "scripts": {
+    "test": "node --test tests/unit.test.mjs && python3 -m unittest discover -s tests -p \"test_*.py\""
+  }
+}

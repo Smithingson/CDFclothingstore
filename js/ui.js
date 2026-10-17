@@ -25,7 +25,7 @@ export function itemRow(item, { type = "checkbox", groupName, checked, onChange 
 }
 
 function noneRow(groupName, checked, onPick) {
-  const input = el("input", { type: "radio", name: groupName, id: `${groupName}-none`, checked });
+  const input = el("input", { type: "radio", name: groupName, id: `${groupName}-none`.replace(/[^\w-]/g, "_"), checked });
   input.addEventListener("change", onPick);
   return el("label", { className: "row" }, input, el("span", { className: "thumb none", textContent: "—" }),
     el("span", { className: "lbl" }, el("b", { textContent: "None" })));
