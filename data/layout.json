@@ -6,7 +6,7 @@
         {"name":"Green Arm Wraps"},
         {"name":"Green Arm Bands"},
         {"name":"Green Arm Strings"},
-        {"name":"Willingman's Tunic+ (DO NOT USE WITH INGELD GAMBESON)","default":true}
+        {"name":"Willingman's Tunic+ (DO NOT USE WITH INGELD GAMBESON)"}
       ]},
       {"section":"8. GAMBESON", "items": [
         {"name":"[LR2] Ingeld Gambeson 1+","group":"gambeson","default":true},

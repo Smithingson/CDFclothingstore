@@ -1,1 +1,6 @@
 __pycache__/
+uploads/
+uploads.json
+out/
+node_modules/
+package-lock.json

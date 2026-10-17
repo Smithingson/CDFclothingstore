@@ -67,7 +67,16 @@ A static site with no build step and one outside library (JSZip, for the layers 
 ## Tests
 
 - `npm test` (or `node --test tests/unit.test.mjs` and `python3 -m unittest discover -s tests -p "test_*.py"`) checks the catalog, layer order, rules and the Drive file checks. The deploy runs both.
-- `tests/regression.mjs` drives a served copy of the site through representative outfits (each branch's defaults, pick-one changes, rule warnings, mixed branches, your own PNGs, skin colour, Clear all) and saves every download. `tests/compare_runs.py` compares two such runs pixel by pixel, so a change can be checked against the live version. It needs Playwright and the Drive items (`uploads.json` and `uploads/`) next to the site.
+- `tests/regression.mjs` drives a served copy of the site through representative outfits (each branch's defaults, pick-one changes, rule warnings, mixed branches, your own PNGs, skin colour, Clear all) and saves every download. `tests/compare_runs.py` compares two such runs pixel by pixel, so a change can be checked against the live version. Steps (Node.js 20+ and Python 3 with Pillow):
+
+```
+npm install --no-save playwright && npx playwright install chromium
+node tests/fetch_uploads.mjs                      # copies the Drive items from the live site
+python -m http.server 8000                        # in a second terminal: serves this folder
+node tests/regression.mjs https://smithingson.github.io/LarovanUniformGenerator/ out/live
+node tests/regression.mjs http://localhost:8000/ out/local
+python tests/compare_runs.py out/live out/local   # "No differences." or a list of what changed
+```
 
 ## One-time setup
 
