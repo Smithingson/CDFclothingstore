@@ -49,10 +49,11 @@ async function start() {
   const loaded = await Promise.all(srcs.map(loadImage));
   srcs.forEach((src, i) => loaded[i] && images.set(src, loaded[i]));
   const broken = dropBrokenItems();
-  const brokenArt = catalog.branches.flatMap(b => [b.showcase, ...GARMENTS.map(g => b.frame[g])]).filter(s => !images.has(s));
+  const brokenArt = catalog.branches.flatMap(b => [[b.showcase, `${b.name} showcase card`], ...GARMENTS.map(g => [b.frame[g], `${b.name} ${g} frame`])])
+    .filter(([src]) => !images.has(src)).map(([, what]) => what);
   showNotice([
     broken.length ? `${broken.length} item${broken.length === 1 ? "" : "s"} couldn't load and ${broken.length === 1 ? "is" : "are"} hidden: ${broken.join(", ")}.` : "",
-    brokenArt.length ? `Some branch artwork couldn't load (${brokenArt.join(", ")}).` : "",
+    brokenArt.length ? `Couldn't load the ${brokenArt.join(", ")}.` : "",
   ].filter(Boolean).join(" ") + (broken.length || brokenArt.length ? " Reload the page to try again." : ""));
 
   ready = true;
@@ -99,7 +100,8 @@ function refresh() {
 function showShowcase() {
   const card = images.get(branchOf(view.branch).showcase);
   $("save-sc").disabled = !ready || !card;
-  if (!ready || !card) return;
+  if (!ready) return;
+  if (!card) { $("sc").getContext("2d").clearRect(0, 0, SHOWCASE.w, SHOWCASE.h); return; }
   for (const g of GARMENTS) drawTemplate(templates[g], outfit.stack(g, view.branch), images, frameImage(g));
   drawShowcase($("sc"), card, view.skin, templates);
 }
@@ -140,11 +142,7 @@ function renderList() {
     isOn: l => outfit.isOn(l),
     onAdd: files => addCustom(g, files),
     onToggle: (l, on) => { outfit.set(l, on); refresh(); },
-    onMove: (l, dir, button) => {
-      if (!outfit.moveCustom(l, dir, view.branch)) return;
-      refresh();
-      if (button.disabled) button.parentElement.querySelector(dir > 0 ? ".down" : ".up").focus();
-    },
+    onMove: (l, dir) => { if (outfit.moveCustom(l, dir, view.branch)) refresh(); },
     onRemove: l => {
       outfit.removeCustom(l);
       images.delete(l.src);

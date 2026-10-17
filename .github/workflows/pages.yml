@@ -25,6 +25,10 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install google-auth==2.35.0 requests==2.32.3 pillow==11.0.0
+      - name: Run tests
+        run: |
+          node --test tests/unit.test.mjs
+          python -m unittest discover -s tests -p "test_*.py"
       - name: Copy site files
         run: |
           mkdir _site

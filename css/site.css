@@ -70,8 +70,8 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .add .msg { flex: 1 1 220px; min-width: 0; }
 .add .msg.err { color: var(--warn); }
 .order { display: flex; align-items: center; gap: 4px; font: 500 12px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
-.order button { font: 11px/1 var(--body); width: 24px; height: 22px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); color: var(--accent); cursor: pointer; }
-.order button:disabled { opacity: .35; cursor: default; }
+.order button { font: 11px/1 var(--body); width: 24px; height: 24px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); color: var(--accent); cursor: pointer; }
+.order button[aria-disabled="true"] { opacity: .35; cursor: default; }
 .order button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
 .order span { margin-left: 4px; }
 .remove, .link { justify-self: start; font: 13px/1.2 var(--body); background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; }

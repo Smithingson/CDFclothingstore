@@ -148,7 +148,8 @@ await run("custom-layers", async c => {
   await c.dl("#save", "added-shirt.png");
   const down = c.p.locator(".order .down");
   for (let i = 0; i < 3; i++) await down.nth(0).click();          // newest PNG (blue) down three layers
-  while (!(await down.nth(1).isDisabled())) await down.nth(1).click(); // red to the bottom
+  const stuck = b => b.evaluate(e => e.disabled || e.getAttribute("aria-disabled") === "true");
+  for (let i = 0; i < 40 && !(await stuck(down.nth(1))); i++) await down.nth(1).click();   // red to the bottom
   await c.p.locator(".order .up").nth(1).click();
   await c.snap("moved");
   await c.dl("#save", "moved-shirt.png");

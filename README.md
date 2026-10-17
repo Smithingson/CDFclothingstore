@@ -35,14 +35,39 @@ Larovan Uniform Generator Uploads/
 - New items appear **on top of their section** and start unticked.
 - Under 5 MB, and no two files with the same name in one section.
 - To remove an item, delete the file from Drive. To update one, replace the file, keeping the same name.
-- The original items of every branch live in these folders too. If Drive returns no items at all, the update stops and the site keeps its last version. Their stacking order, pick-one groups and starting picks are remembered by name in `index.html`, so renaming an original makes it a new, unticked item on top of its section.
-- Each branch's background frame, the branch buttons and the showcase card stay in this repo and can't be changed from Drive.
+- The original items of every branch live in these folders too. If Drive returns no items at all, the update stops and the site keeps its last version. Their stacking order, pick-one groups and starting picks are remembered by name in `data/layout.json`, so renaming an original makes it a new, unticked item on top of its section.
+- Each branch's background frame, button and showcase card stay in this repo (`assets/<branch>/`) and can't be changed from Drive.
 
 Files that break a rule are skipped. The reason is listed in the latest run under the repo's **Actions** tab.
 
 ## How it updates
 
-`.github/workflows/pages.yml` runs every hour, on every push to `main`, and on demand (Actions → Build and deploy site → Run workflow). It copies the site, runs `scripts/sync_drive.py` to pull and check the Drive PNGs into `uploads/` + `uploads.json`, and deploys to GitHub Pages.
+`.github/workflows/pages.yml` runs every hour, on every push to `main`, and on demand (Actions → Build and deploy site → Run workflow). It runs the tests, copies the site, runs `scripts/sync_drive.py` to pull and check the Drive PNGs into `uploads/` + `uploads.json`, and deploys to GitHub Pages.
+
+## How the code is organised
+
+A static site with no build step and one outside library (JSZip, for the layers .zip).
+
+| Where | What |
+| --- | --- |
+| `data/branches.json` | The branch tabs, in order: name and slug. Also read by the Drive sync. |
+| `data/layout.json` | Per branch and garment: sections from the bottom of the stack up, each item's name, pick-one `group` and `default`. |
+| `assets/<slug>/` | Each branch's `button.png`, `shirt-frame.png`, `pants-frame.png` and `showcase.png`. |
+| `js/catalog.js` | Builds the item list from the layout plus `uploads.json`, and reads badges and rules from item names. |
+| `js/outfit.js` | What's ticked, defaults, Clear all, your own PNGs, and the drawing order (`stack`). |
+| `js/rules.js` | "Do not use with / without" and mixed-branch warnings. |
+| `js/render.js` | Drawing the template and showcase, and the PNG and .zip downloads. |
+| `js/ui.js`, `js/main.js` | The interface pieces, and the page controller that connects everything. |
+| `js/config.js` | Template size and showcase card geometry. |
+
+**Layer order** (bottom to top): items still ticked from other branches, then the current branch's items (first section at the bottom), with your own PNGs placed just above the item they were moved onto (on top by default), then the branch frame. See `Outfit.stack` in `js/outfit.js`.
+
+**Adding a branch:** add it to `data/branches.json`, add its sections to `data/layout.json`, put its four images in `assets/<slug>/`, and create a Drive folder with the same name. The buttons, defaults, frame and showcase all follow from that.
+
+## Tests
+
+- `node --test tests/unit.test.mjs` and `python3 -m unittest discover -s tests -p "test_*.py"` check the catalog, layer order, rules and the Drive file checks. The deploy runs both.
+- `tests/regression.mjs` drives a served copy of the site through representative outfits (each branch's defaults, pick-one changes, rule warnings, mixed branches, your own PNGs, skin colour, Clear all) and saves every download. `tests/compare_runs.py` compares two such runs pixel by pixel, so a change can be checked against the live version. It needs Playwright and the Drive items (`uploads.json` and `uploads/`) next to the site.
 
 ## One-time setup
 

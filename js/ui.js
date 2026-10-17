@@ -85,7 +85,7 @@ export function customSection({ title, garment, size, items, message, isOn, onAd
     for (const [cls, sym, dir, word] of [["up", "▲", 1, "up"], ["down", "▼", -1, "down"]]) {
       const b = el("button", { type: "button", className: cls, textContent: sym, title: `Move this PNG ${word} one layer` });
       b.setAttribute("aria-label", `Move ${l.label} ${word} one layer`);
-      b.addEventListener("click", e => { e.preventDefault(); onMove(l, dir, b); });
+      b.addEventListener("click", e => { e.preventDefault(); if (b.getAttribute("aria-disabled") !== "true") onMove(l, dir); });
       order.append(b);
     }
     order.append(el("span", { className: "pos" }));
@@ -106,13 +106,14 @@ export function updateCounts(root, isOnId) {
   });
 }
 
-// "layer n of m" for each custom PNG, and which arrows can move it.
+// "layer n of m" for each custom PNG, and which arrows can move it. Arrows that can't move are marked
+// aria-disabled rather than disabled, so keyboard focus stays on them at the top or bottom.
 export function updateCustomPositions(root, stack) {
   root.querySelectorAll(".order[data-id]").forEach(o => {
     const j = stack.findIndex(l => l.id === +o.dataset.id);
     o.querySelector(".pos").textContent = j < 0 ? "hidden" : `layer ${j + 1} of ${stack.length}`;
-    o.querySelector(".up").disabled = j < 0 || j === stack.length - 1;
-    o.querySelector(".down").disabled = j <= 0;
+    o.querySelector(".up").setAttribute("aria-disabled", String(j < 0 || j === stack.length - 1));
+    o.querySelector(".down").setAttribute("aria-disabled", String(j <= 0));
   });
 }
 
