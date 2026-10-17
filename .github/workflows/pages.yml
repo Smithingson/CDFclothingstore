@@ -28,7 +28,7 @@ jobs:
       - name: Copy site files
         run: |
           mkdir _site
-          cp -r index.html layers branches showcaseTemplate.png _site/
+          cp -r index.html layers branches showcaseTemplate.png showcase-*.png _site/
       - name: Pull creator uploads from Google Drive
         env:
           GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}

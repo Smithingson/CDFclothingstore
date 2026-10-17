@@ -541,9 +541,13 @@ const SC = {
   pants: [[151,355,64,31,146],[217,355,64,160,146],[308,355,64,224,146],[231,74,128,160,18],[440,355,64,417,146],[85,355,64,481,146],[427,74,128,417,18],[374,355,64,610,146]].map(([sx,sy,sw,dx,dy]) => ({ sx, sy, sw, dx, dy })),
   skin: [[31,18,64,256],[96,18,256,128],[160,18,128,256],[353,18,256,128],[417,18,128,256],[610,18,64,256]],
 };
-const scCard = new Image();
-const scCardReady = new Promise((res, rej) => { scCard.onload = res; scCard.onerror = rej; });
-scCard.src = "showcaseTemplate.png";
+// One showcase card per branch; the card follows the branch buttons.
+const SC_CARDS = { "Ingeld": "showcaseTemplate.png", "City Watch": "showcase-city-watch.png", "Dasmant": "showcase-dasmant.png", "Jequis": "showcase-jequis.png" };
+const scCards = {};
+const scCardReady = Promise.all(Object.entries(SC_CARDS).map(([b, src]) => new Promise((res, rej) => {
+  const img = scCards[b] = new Image();
+  img.onload = res; img.onerror = rej; img.src = src;
+})));
 const garments = {};
 let skin = "#EAB892", scReady = false;
 
@@ -559,7 +563,7 @@ function drawShowcase() {
   if (!scReady) return;
   const ctx = $("sc").getContext("2d");
   ctx.clearRect(0, 0, 700, 373);
-  ctx.drawImage(scCard, 0, 0);
+  ctx.drawImage(scCards[state.branch], 0, 0);
   ctx.fillStyle = skin;
   for (const [x, y, w, h] of SC.skin) ctx.fillRect(x, y, w, h);
   for (const f of ["pants", "shirt"]) {
