@@ -65,8 +65,12 @@ class BuildTest(unittest.TestCase):
             self.assertEqual([i["name"] for i in result["Ingeld"]["shirt"][0]["items"]], ["Twice"])
 
     def test_branches_come_from_the_site_config(self):
-        self.assertEqual(sorted(sync_drive.BRANCHES.values()), ["City Watch", "Dasmant", "Ingeld", "Jequis"])
-        self.assertEqual(sync_drive.SLUG("City Watch"), "city-watch")
+        import json
+        config = json.loads((Path(__file__).resolve().parent.parent / "data" / "branches.json").read_text(encoding="utf-8"))
+        self.assertEqual(sorted(sync_drive.BRANCHES.values()), sorted(b["name"] for b in config["branches"]))
+        for b in config["branches"]:
+            self.assertEqual(sync_drive.BRANCHES[b["name"].lower()], b["name"])   # folder names match case-insensitively
+            self.assertEqual(sync_drive.SLUG(b["name"]), b["slug"])
 
 
 if __name__ == "__main__":
