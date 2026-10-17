@@ -1,0 +1,432 @@
+{
+  "Ingeld": {
+    "shirt": [
+      {"section":"9. GARMENTS", "items": [
+        {"name":"Brown Gloves","default":true},
+        {"name":"Green Arm Wraps"},
+        {"name":"Green Arm Bands"},
+        {"name":"Green Arm Strings"},
+        {"name":"Willingman's Tunic+ (DO NOT USE WITH INGELD GAMBESON)","default":true}
+      ]},
+      {"section":"8. GAMBESON", "items": [
+        {"name":"[LR2] Ingeld Gambeson 1+","group":"gambeson","default":true},
+        {"name":"[LR2] Ingeld Gambeson 2+","group":"gambeson"},
+        {"name":"[LR2] Ingeld Gambeson 3+","group":"gambeson"},
+        {"name":"(RAW) Ingeld Heraldry"},
+        {"name":"Grounded Armband Identifiers"},
+        {"name":"Bloused Brown Gloves","default":true}
+      ]},
+      {"section":"7. CHAINMAIL", "items": [
+        {"name":"[MR+] Short-sleeved Chainmail Haubergeon"},
+        {"name":"[MR3] Full Chainmail Haubergeon+"}
+      ]},
+      {"section":"6. LESSER ARM ARMOR", "items": [
+        {"name":"[MR3] Splinted Rebracers"},
+        {"name":"[LR3] Splinted Vambracers"},
+        {"name":"[LR3] Proto-splinted Bracers"},
+        {"name":"[⛊] Proto-couters [MR1+]"},
+        {"name":"[LR3] Fingerless Proto-Gauntlets"}
+      ]},
+      {"section":"5. GREATER ARM ARMOR", "items": [
+        {"name":"[HR] Plate Rebracers"},
+        {"name":"[HR] Plate Vambracers"},
+        {"name":"[LR3] Jackchains"},
+        {"name":"[LR3] Hourglass Gauntelts","default":true},
+        {"name":"[LR3] Plate Pauldrons","default":true},
+        {"name":"[HR2] Plate Couters"}
+      ]},
+      {"section":"4. CHEST ARMOR & ACCESSORIES", "items": [
+        {"name":"[LR3] Simple Leather Pteruges"},
+        {"name":"[MR3] Lamellar Vest"},
+        {"name":"[MR3] Lamellar Tassets+"},
+        {"name":"[MR3] Auxilleries' Scalemail Vest+"},
+        {"name":"[⛊] Bannerman Coat of Plates [HR2+]"},
+        {"name":"[HR3] Plate Cuirass"}
+      ]},
+      {"section":"3. BELT, SASHES & BLOUSING", "items": [
+        {"name":"Sapper Appron"},
+        {"name":"Pteruges"},
+        {"name":"Green Sash","default":true},
+        {"name":"Equipment Belt+","default":true},
+        {"name":"Swordbelt+"},
+        {"name":"[MR2] Chainmail Blousing"},
+        {"name":"Blousing"},
+        {"name":"[MR2] Loyalty Sash"}
+      ]},
+      {"section":"2. SHOULDER WEAR", "items": [
+        {"name":"Swordbelt Baldric"},
+        {"name":"[LR3] Chainmail Coif","default":true},
+        {"name":"[MR1] Scale Coif"},
+        {"name":"[MR1] Cavalry Scale Coif"},
+        {"name":"[MR1] Rondels"}
+      ]},
+      {"section":"1. OUTERWEAR", "items": [
+        {"name":"Dusty Red Blanket Cloak","group":"cloak"},
+        {"name":"Dusty Red Poncho Cloak","group":"cloak"},
+        {"name":"Hooded Cloak","group":"cloak"}
+      ]}
+    ],
+    "pants": [
+      {"section":"FOOTWEAR", "items": [
+        {"name":"Brown Shoes","default":true}
+      ]},
+      {"section":"PRESET TROUSERS", "items": [
+        {"name":"Simple Trousers 1","group":"trousers"},
+        {"name":"Simple Trousers 2","group":"trousers"},
+        {"name":"Rope Belt"},
+        {"name":"Trousers [VAR 1]","group":"trousers","default":true},
+        {"name":"Trousers [VAR 2]","group":"trousers"},
+        {"name":"Trousers [VAR 3]","group":"trousers"},
+        {"name":"Trousers [VAR 4]","group":"trousers"},
+        {"name":"Trousers [VAR 5]","group":"trousers"},
+        {"name":"Trousers [VAR 6]","group":"trousers"},
+        {"name":"Trousers 7","group":"trousers"},
+        {"name":"Trousers 8","group":"trousers"},
+        {"name":"Trousers 9","group":"trousers"},
+        {"name":"Knee Patches","default":true},
+        {"name":"Fur Lining"}
+      ]},
+      {"section":"FOOTWEAR OVER", "items": [
+        {"name":"Legwraps and Socks [VAR 1]","group":"legwraps"},
+        {"name":"Legwraps and Socks [VAR 2]","group":"legwraps"},
+        {"name":"Legwraps and Socks [VAR 3]","group":"legwraps"},
+        {"name":"Legwraps and Socks [VAR 4]","group":"legwraps"},
+        {"name":"Caligae"},
+        {"name":"Caligae with Socks"},
+        {"name":"Brown Shoes"}
+      ]},
+      {"section":"6. CUSTOM TROUSERS", "items": [
+        {"name":"Main Trouser Color"},
+        {"name":"Stripes Right"},
+        {"name":"Stripes Left"},
+        {"name":"Custom Trouser Overlay"}
+      ]},
+      {"section":"5. GAMBESON & GARMENT DROPDOWNS", "items": [
+        {"name":"Willingman Tunic- (DO NOT USE WITH INGELD GAMBESON)"},
+        {"name":"[LR2] Ingeld Gambeson 1-","group":"gambeson","default":true},
+        {"name":"[LR2] Ingeld Gambeson 2-","group":"gambeson"},
+        {"name":"[LR2] Ingeld Gambeson 3","group":"gambeson"}
+      ]},
+      {"section":"4. LESSER LEG ARMOR", "items": [
+        {"name":"[LR3] Proto-splinted Greaves"},
+        {"name":"[MR1] Leather Scale Cuisses"},
+        {"name":"[LR3] Padded Chausse"},
+        {"name":"[MR3] Chaunmail Chausse"}
+      ]},
+      {"section":"3. GREATER LEG ARMOR", "items": [
+        {"name":"[HR3] Plate Cuisses"},
+        {"name":"[HR1] Plate Greaves"},
+        {"name":"[MR3] Plate Poleyons"}
+      ]},
+      {"section":"2. CHEST & CHAINMAIL ARMOR", "items": [
+        {"name":"[MR1-3] Chainmail Haubergeon-"},
+        {"name":"[LR3] Simple Leather Pteruges"},
+        {"name":"[MR3] Lamellar Tassets-"},
+        {"name":"[MR3] Auxilleries' Scalemail Vest-"},
+        {"name":"[HR2] Coat-of-Plates-"}
+      ]},
+      {"section":"2. BELT & ACCESSORY DROPDOWNS", "items": [
+        {"name":"Sapper Appron"},
+        {"name":"Proper Leather Pteruges-"},
+        {"name":"Equipment Belt-","default":true},
+        {"name":"Swordbelt-"}
+      ]},
+      {"section":"1. OUTWEAR DROPDOWNS", "items": [
+        {"name":"Dusty Red Blanket Cloak","group":"cloak"},
+        {"name":"Dusty Red Poncho Cloak","group":"cloak"},
+        {"name":"Hooded Cloak","group":"cloak"}
+      ]}
+    ]
+  },
+  "City Watch": {
+    "shirt": [
+      {"section":"9. UNDERGARMENTS", "items": [
+        {"name":"Gloves"},
+        {"name":"Shirt Cuffs."},
+        {"name":"Sentries Wool Tunic","group":"cw-wool"},
+        {"name":"[LR2] Watchman's Wool Tunic","group":"cw-wool","default":true},
+        {"name":"[LR3] Senior Watchman's Wool Tunic","group":"cw-wool"},
+        {"name":"Yellow Strings","group":"cw-strings","default":true},
+        {"name":"Red Strings","group":"cw-strings"},
+        {"name":"Blue Rolled Sleeves"},
+        {"name":"Rolled Sleeves Wool Tunic"},
+        {"name":"Yellow Strings (For Rolled Sleeves)","group":"cw-rolledstrings"},
+        {"name":"Red Strings (For Rolled Sleeves)","group":"cw-rolledstrings"}
+      ]},
+      {"section":"9. LESSER ARMOR", "items": [
+        {"name":"[MR3] Full Maille Sleeves"},
+        {"name":"[MR1] Dendra Panoply Vambracers"},
+        {"name":"[HR1] Dendra Panoply Rebracers"},
+        {"name":"[MR3] Dendra Panoply Gauntlets"}
+      ]},
+      {"section":"8. LINEN TUNICS", "items": [
+        {"name":"Plain Linen Tunic","group":"cw-linen"},
+        {"name":"Red Banded Linen Tunic","group":"cw-linen","default":true},
+        {"name":"Ruriksfield Precinct Tunic+","group":"cw-linen"},
+        {"name":"Westharbor Precinct Tunic+","group":"cw-linen"},
+        {"name":"Candlewick Precinct Tunic+","group":"cw-linen"},
+        {"name":"Jernyrow Precinct Tunic+","group":"cw-linen"},
+        {"name":"Leothric Square Precinct Tunic+","group":"cw-linen"}
+      ]},
+      {"section":"7. UPPER ARMOR", "items": [
+        {"name":"[LR3] Brown Shoulder Tassels","group":"cw-shtassels"},
+        {"name":"[LR3] Brown Shoulder Pturges","group":"cw-shpteruges"},
+        {"name":"[MR3] Pale Red Shoulder Tassels","group":"cw-shtassels"},
+        {"name":"[MR3] Pale Red Shoulder Pturges","group":"cw-shpteruges"},
+        {"name":"[LR3] Maille Hamata+","group":"cw-hamata"},
+        {"name":"[LR3] Maille Hamata+ [ALT]","group":"cw-hamata"},
+        {"name":"[MR3] Dendra Pauldrons"}
+      ]},
+      {"section":"4. CHEST ARMOR & ACCESSORIES","notes":["THE SCALES ON THE 'SCALED LINOTHORAX' ARE DECORATIVE. THEY HAVE NO ADDITIONAL PROTECTION"], "items": [
+        {"name":"[LR2] Linothorax+ (YELLOW)","group":"cw-linothorax"},
+        {"name":"[LR2] Linothorax+ (BLUE)","group":"cw-linothorax","default":true},
+        {"name":"[LR2] Linothorax w⁄ Hamata Collar+ (YELLOW)","group":"cw-linothorax"},
+        {"name":"[LR2] Linothorax 2⁄ Hamata Collar+ (BLUE)","group":"cw-linothorax"},
+        {"name":"[LR2] Scaled Linothorax+ (YELLOW)","group":"cw-linothorax"},
+        {"name":"[LR2] Scaled Linothorax+ (BLUE)","group":"cw-linothorax"},
+        {"name":"[LR2] Scaled Linothorax w⁄ Hamata Collar+ (YELLOW)","group":"cw-linothorax"},
+        {"name":"[LR2] Scaled Linothorax w⁄ Hamata Collar+ (BLUE)","group":"cw-linothorax"},
+        {"name":"[LR2] Scaled Linothorax w⁄ Hamata Collar+ (BLUE) [ALT]","group":"cw-linothorax"},
+        {"name":"[LR3] Brown Tassels+","group":"cw-tassels"},
+        {"name":"[MR3] Pale Red Tassels+","group":"cw-tassels"},
+        {"name":"[LR3] Brown Pteruges+","group":"cw-pteruges"},
+        {"name":"[MR3] Pale Red Pteruges+","group":"cw-pteruges"},
+        {"name":"[MR1] Triple-Disc Breastplate","group":"cw-bodyarmor"},
+        {"name":"[MR2] Triple-Disc Breastplate","group":"cw-bodyarmor"},
+        {"name":"[MR3] Musculata Cuirass","group":"cw-bodyarmor"},
+        {"name":"[MR2] Hinterlands Scale Vest","group":"cw-bodyarmor"},
+        {"name":"[LR3] Hamata Maille Collar [ALT]","group":"cw-collar"},
+        {"name":"[LR3] Hamata Maille Collar","group":"cw-collar"},
+        {"name":"[HR2] Dendra Panoply Besagews"},
+        {"name":"[MR2] Hinterlands Scale Coif"}
+      ]},
+      {"section":"3. BELT & SASH", "items": [
+        {"name":"Watchman's Sash","default":true},
+        {"name":"Baldric Belt+","default":true}
+      ]},
+      {"section":"1. OUTERWEAR", "items": [
+        {"name":"Oil-slick Raincloak","group":"cw-raincloak"},
+        {"name":"[HR] Bleached Oil-Slick Raincloak","group":"cw-raincloak"}
+      ]}
+    ],
+    "pants": [
+      {"section":"8. TROUSERS", "items": [
+        {"name":"Base Trousers","group":"cw-trousers","default":true},
+        {"name":"Plaid Trousers","group":"cw-trousers"},
+        {"name":"Bloused Plaid Trousers","group":"cw-trousers"}
+      ]},
+      {"section":"7. FOOTWEAR & LEG WRAPS", "items": [
+        {"name":"Red Leg Wraps","group":"cw-legwraps","default":true},
+        {"name":"Blue Leg Wraps","group":"cw-legwraps"},
+        {"name":"Caligae With Socks","group":"cw-caligae","default":true},
+        {"name":"Caligae","group":"cw-caligae"}
+      ]},
+      {"section":"6. LESSER LEG ARMOR", "items": [
+        {"name":"[MR2] Dendra Panoply Greaves"}
+      ]},
+      {"section":"4. GARMENT DROPDOWNS", "items": [
+        {"name":"Plain Linen Tunic-","group":"cw-tunic"},
+        {"name":"Universal Red Banded Tunic-","group":"cw-tunic","default":true},
+        {"name":"Ruriksfield Precinct Tunic-","group":"cw-tunic"},
+        {"name":"Westharbor Precinct Tunic-","group":"cw-tunic"},
+        {"name":"Candlewick Precinct Tunic-","group":"cw-tunic"},
+        {"name":"Jernyrow Precinct Tunic-","group":"cw-tunic"},
+        {"name":"Leohtric Square Precinct Tunic-","group":"cw-tunic"}
+      ]},
+      {"section":"3. TORSO DROPDOWNS", "items": [
+        {"name":"[LR3] Maille Hamata-"},
+        {"name":"[HR] Maille w⁄ Rondel Poleyns"},
+        {"name":"[LR2] Linothorax- (YELLOW)","group":"cw-linothorax"},
+        {"name":"[LR2] Linothorax- (BLUE)","group":"cw-linothorax","default":true},
+        {"name":"[LR3] Brown Tassels-","group":"cw-tassels"},
+        {"name":"[MR3] Pale Red Tassels-","group":"cw-tassels"},
+        {"name":"[LR3] Brown Pteruges-","group":"cw-pteruges"},
+        {"name":"MR3] Pale Red Pteruges-","group":"cw-pteruges"},
+        {"name":"[MR3] Musculata Cuirass-"}
+      ]},
+      {"section":"2. BELT & SASH DROPDOWNS", "items": [
+        {"name":"Baldric Belt-","default":true}
+      ]},
+      {"section":"1. OUTERWEAR DROPDOWNS", "items": [
+
+      ]}
+    ]
+  },
+  "Dasmant": {
+    "shirt": [
+      {"section":"Layer 12", "items": [
+
+      ]},
+      {"section":"BODY SHADERS", "items": [
+        {"name":"Dasmant Boat Shoulder","default":true},
+        {"name":"Dasmant G&G Chest Tattoo","default":true},
+        {"name":"Body Dirt"},
+        {"name":"Arm Hair"},
+        {"name":"Muscle Shader","default":true}
+      ]},
+      {"section":"TROUSERS", "items": [
+        {"name":"Brown Clamdiggers","group":"da-clamdiggers","default":true},
+        {"name":"Blue Clamdiggers","group":"da-clamdiggers"},
+        {"name":"Right White Stripped Blue Clamdiggers"},
+        {"name":"Left White Stripped Blue Clamdiggers"},
+        {"name":"Right Yellow Stripped Blue Clamdiggers"},
+        {"name":"Left Yellow Stripped Blue Clamdiggers"},
+        {"name":"Bleached Clamdiggers","group":"da-clamdiggers"},
+        {"name":"Right Red Stripped Bleached Clamdiggers"},
+        {"name":"Left Red Stripped Bleached Clamdiggers"}
+      ]},
+      {"section":"GARMENTS", "items": [
+        {"name":"Restitched Gloves","default":true},
+        {"name":"Patterned Shirt","group":"da-shirt","default":true},
+        {"name":"Dyed Shirt","group":"da-shirt"},
+        {"name":"Overdyed Shirt","group":"da-shirt"},
+        {"name":"Inversed Shirt","group":"da-shirt"},
+        {"name":"Two-tone Shirt","group":"da-shirt"}
+      ]},
+      {"section":"ARMOR", "items": [
+        {"name":"Pinkscale Reinforced Jerkin","group":"da-jerkin"},
+        {"name":"Pinkskin Reinforced Jerkin without Pauldrons","group":"da-jerkin","default":true},
+        {"name":"[LR3+] Painted Pink Scale Vambracers","default":true},
+        {"name":"[MR+] Waxed Tin-bronze Alloy Gauntlets","group":"da-gauntlets","default":true},
+        {"name":"[MR+] Slightly Oxidized Tin-bronze Alloy Gauntlets","group":"da-gauntlets"},
+        {"name":"[HR+] Waxed Tin-bronze Rebracers","group":"da-rebracers","default":true},
+        {"name":"[HR+] Slightly Oxidized Tin-bronze Rebracers","group":"da-rebracers"},
+        {"name":"[MR+] Waxed Tin-bronze Alloy Couters","group":"da-couters","default":true},
+        {"name":"[MR+] Slightly Oxidized Tin-bronze Alloy Couters","group":"da-couters"},
+        {"name":"[MR+] Waxed Tin-bronze Alloy Spauldors","group":"da-spauldors","default":true},
+        {"name":"[MR+] Slightly Oxidized Tin-Bronze Alloy Spauldors","group":"da-spauldors"},
+        {"name":"[MR3+] Tin-bronze Plated Chainmail","group":"da-chainmail","default":true},
+        {"name":"[MR3+] Oxidized Tin-bronze Plated Chainmail","group":"da-chainmail"},
+        {"name":"[HR+] Waxed Tin-bronze Pauldrons","group":"da-pauldrons","default":true},
+        {"name":"[HR+] Slightly Oxidized Tin-bronze Pauldrons","group":"da-pauldrons"}
+      ]},
+      {"section":"OVERWEAR⁄BELTS⁄SASHES", "items": [
+        {"name":"Reinforced Deck Vest","group":"da-vest"},
+        {"name":"[HR+] Tailored Captain's Gilet","group":"da-vest","default":true},
+        {"name":"BELT WRINKLE","default":true},
+        {"name":"Yellow Sash","default":true},
+        {"name":"[LR3+] Painted Pinkscale Gorget","default":true}
+      ]}
+    ],
+    "pants": [
+      {"section":"Layer 15", "items": [
+
+      ]},
+      {"section":"BODY SHADERS", "items": [
+        {"name":"Body Dirt"},
+        {"name":"Leg Hair"},
+        {"name":"Muscle Shader","default":true}
+      ]},
+      {"section":"FOOTWEAR", "items": [
+        {"name":"Caligae","group":"da-shoes"},
+        {"name":"Leather Slideons","group":"da-shoes"},
+        {"name":"Dockworker Mocassins","group":"da-shoes","default":true},
+        {"name":"Offwhite Puttees","group":"da-puttees"},
+        {"name":"Blue Puttees","group":"da-puttees"},
+        {"name":"Yellow Puttees","group":"da-puttees"},
+        {"name":"Blue-Yellow Ptripped Puttees","group":"da-puttees"}
+      ]},
+      {"section":"CLAMDIGGERS", "items": [
+        {"name":"Brown Clamdiggers","group":"da-clamdiggers","default":true},
+        {"name":"Blue Clamdiggers","group":"da-clamdiggers"},
+        {"name":"Right White Stripped Blue Clamdiggers"},
+        {"name":"Left White Stripped Blue Clamdiggers"},
+        {"name":"Right Yellow Stripped Blue Clamdiggers"},
+        {"name":"Left Yellow Stripped Blue Clamdiggers"},
+        {"name":"Bleached Clamdiggers","group":"da-clamdiggers"},
+        {"name":"Right Red Stripped Bleached Clamdiggers"},
+        {"name":"Left Red Stripped Bleached Clamdiggers"}
+      ]},
+      {"section":"BLOUSED FOOTWEAR", "items": [
+        {"name":"Bloused Dockworker Mocassins","group":"da-bloused"},
+        {"name":"Bloused Offwhite Puttees","group":"da-bloused","default":true},
+        {"name":"Blue Puttees","group":"da-bloused"},
+        {"name":"Yellow Puttees","group":"da-bloused"},
+        {"name":"Blue-Yellow Ptripped Puttees","group":"da-bloused"}
+      ]},
+      {"section":"ARMOR", "items": [
+        {"name":"[MR+] Painted Pinkscale Greaves","default":true},
+        {"name":"[HR+] Waxed Tin-bronze Alloy Cuisses","group":"da-cuisses","default":true},
+        {"name":"[HR+] Slightly Oxidized Tin-bronze Alloy Cuisses","group":"da-cuisses"},
+        {"name":"[MR+] Waxed Tin-bronze Alloy Polyeons","group":"da-poleyons","default":true},
+        {"name":"[MR+] Slightly Oxidized Tin-Bronze Alloy Poleyons","group":"da-poleyons"},
+        {"name":"Pinkscale Reinforced Leather Jerkin","default":true},
+        {"name":"[MR3+] Tin-bronze Plated Chainmail","default":true}
+      ]},
+      {"section":"BELTS⁄SASHES", "items": [
+        {"name":"Reinforced Deck Vest","group":"da-vest"},
+        {"name":"[HR+] Tailored Captain's Gilet","group":"da-vest","default":true},
+        {"name":"Yellow Sash","default":true}
+      ]}
+    ]
+  },
+  "Jequis": {
+    "shirt": [
+      {"section":"6. TATTOOS & BODY SHADERS", "items": [
+        {"name":"Kris Dagger Tattoo - 3⁄5⁄2026 Event"},
+        {"name":"Arm Hair","default":true},
+        {"name":"Muscle Shader","default":true}
+      ]},
+      {"section":"5. GARMENTS", "items": [
+        {"name":"Brown Gloves","default":true},
+        {"name":"Yellow Jumeh","group":"jq-jumeh"},
+        {"name":"Purple Jumeh","group":"jq-jumeh"},
+        {"name":"Wrinkles","default":true},
+        {"name":"Pleated Lebade","default":true},
+        {"name":"Rope Tie Belt","default":true},
+        {"name":"Waist Shawl","default":true},
+        {"name":"Bloused Yellow Jumeh","group":"jq-jumeh"},
+        {"name":"Bloused Purple Jumeh","group":"jq-jumeh","default":true},
+        {"name":"[LR2+] Emroidered Padded Coat","default":true}
+      ]},
+      {"section":"4. LESSER ARMOR", "items": [
+        {"name":"[MR3+] Chainmail Hauberk Sleeves"},
+        {"name":"[MR3+] Chainmail Sleeve Bedazzlements"},
+        {"name":"[MR2+] Splinted Vambraces"},
+        {"name":"[LR3+] Chainmail Hauberk Short","default":true},
+        {"name":"[MR+] Chainmail Bedazzlements"},
+        {"name":"[LR2+] Rondels"},
+        {"name":"[MR+] Abdomen Platemail"}
+      ]},
+      {"section":"4. BELTS & SASHES", "items": [
+        {"name":"Leater Pteruges"},
+        {"name":"Purple Sash (WEAR ONLY WITH ARMOR)","default":true},
+        {"name":"Swordbelt Addon"},
+        {"name":"Belt B","group":"jq-belt"},
+        {"name":"Belt A","group":"jq-belt","default":true},
+        {"name":"Chainmail Blousing","default":true}
+      ]},
+      {"section":"3. CHEST ARMOR", "items": [
+        {"name":"[HR+] Mirror Armor Chestplate"}
+      ]},
+      {"section":"2. SHOULDERS", "items": [
+        {"name":"[MR+] Mirror Pauldrons"},
+        {"name":"[LR3+] Chainmail Coif","default":true},
+        {"name":"[MR+] Coif Bedazzlement"}
+      ]},
+      {"section":"1. OVERWEAR", "items": [
+        {"name":"Embroidered Avontal Karakul Longcoat"}
+      ]}
+    ],
+    "pants": [
+      {"section":"4. GARMENTS", "items": [
+        {"name":"Avontal Boots (DO NOT USE WITHOUT THE LEBADE)","default":true},
+        {"name":"Pleated Lebade","default":true}
+      ]},
+      {"section":"3. ARMOR", "items": [
+        {"name":"[MR2+] Chainmail Chausses"},
+        {"name":"[LR3+] Chainmail Hauberk","default":true},
+        {"name":"[MR+] Chainmail Bedazzlements","default":true}
+      ]},
+      {"section":"2. DROPDOWNS", "items": [
+        {"name":"Waist Shawl Dropdown","default":true},
+        {"name":"Leater Pteruges Dropdown"},
+        {"name":"Belt A Dropdown","group":"jq-belt","default":true},
+        {"name":"Belt B Dropdown","group":"jq-belt"}
+      ]},
+      {"section":"1. OUTWEAR", "items": [
+        {"name":"Embroidered Avontal Karakul Longcoat Dropdown"}
+      ]}
+    ]
+  }
+}

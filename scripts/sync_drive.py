@@ -11,14 +11,18 @@ import io
 import json
 import os
 import sys
+from pathlib import Path
 
 from PIL import Image
 
 W, H = 585, 559
 MAX_BYTES = 5 * 1024 * 1024
 GARMENTS = {"shirt": "shirt", "pants": "pants"}
-BRANCHES = {"ingeld": "Ingeld", "city watch": "City Watch", "dasmant": "Dasmant", "jequis": "Jequis"}
-SLUG = lambda b: b.lower().replace(" ", "-")
+# Branch names and slugs come from the same config the site uses.
+_CONFIG = json.loads((Path(__file__).resolve().parent.parent / "data" / "branches.json").read_text(encoding="utf-8"))["branches"]
+BRANCHES = {b["name"].lower(): b["name"] for b in _CONFIG}
+_SLUGS = {b["name"]: b["slug"] for b in _CONFIG}
+SLUG = lambda b: _SLUGS[b]
 API = "https://www.googleapis.com/drive/v3/files"
 FOLDER = "application/vnd.google-apps.folder"
 
@@ -49,7 +53,7 @@ def fetch_entries(session, root_id, skipped):
     for b in list_children(session, root_id):
         branch = BRANCHES.get(b["name"].strip().lower())
         if b["mimeType"] != FOLDER or not branch:
-            skipped.append((b["name"], "only Ingeld, City Watch, Dasmant and Jequis folders are used here"))
+            skipped.append((b["name"], "only branch folders (" + ", ".join(BRANCHES.values()) + ") are used here"))
             continue
         for g in list_children(session, b["id"]):
             garment = GARMENTS.get(g["name"].strip().lower())

@@ -1,0 +1,9 @@
+{
+  "about": "One entry per branch tab, in button order. Each branch's artwork lives in assets/<slug>/ (button.png, shirt-frame.png, pants-frame.png, showcase.png), its items in data/layout.json under its name, and its Drive uploads in a Drive folder with the same name.",
+  "branches": [
+    { "name": "Ingeld", "slug": "ingeld" },
+    { "name": "City Watch", "slug": "city-watch" },
+    { "name": "Dasmant", "slug": "dasmant" },
+    { "name": "Jequis", "slug": "jequis" }
+  ]
+}
