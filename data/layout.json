@@ -222,7 +222,8 @@
         {"name":"Caligae","group":"cw-caligae"}
       ]},
       {"section":"6. LESSER LEG ARMOR", "items": [
-        {"name":"[MR2] Dendra Panoply Greaves"}
+        {"name":"[MR2] Dendra Panoply Greaves"},
+        {"name":"[HR] Maille w⁄ Rondel Poleyns"}
       ]},
       {"section":"4. GARMENT DROPDOWNS", "items": [
         {"name":"Plain Linen Tunic-","group":"cw-tunic"},
@@ -235,7 +236,6 @@
       ]},
       {"section":"3. TORSO DROPDOWNS", "items": [
         {"name":"[LR3] Maille Hamata-"},
-        {"name":"[HR] Maille w⁄ Rondel Poleyns"},
         {"name":"[LR2] Linothorax- (YELLOW)","group":"cw-linothorax"},
         {"name":"[LR2] Linothorax- (BLUE)","group":"cw-linothorax","default":true},
         {"name":"[LR3] Brown Tassels-","group":"cw-tassels"},
