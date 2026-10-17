@@ -134,10 +134,6 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
       <p class="eyebrow">City of Larova</p>
       <h1>Larovan Uniform Generator</h1>
     </div>
-    <div class="switch" role="group" aria-label="Garment">
-      <button id="tab-shirt" type="button" aria-pressed="true" data-file="shirt" title="Pick items for the shirt (torso and arms)">Shirt</button>
-      <button id="tab-pants" type="button" aria-pressed="false" data-file="pants" title="Pick items for the pants (legs and lower torso)">Pants</button>
-    </div>
   </header>
 
 
@@ -148,6 +144,10 @@ footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
         <figure><canvas id="sc" width="700" height="373" aria-label="Outfit showcase"></canvas></figure>
         <div class="bar">
           <label class="skin" for="skin" title="Skin color shown behind the clothes in the showcase. Type a hex code like #EAB892.">Skin <input id="skin" type="text" value="#EAB892" maxlength="7" spellcheck="false" autocomplete="off"></label>
+          <div class="switch" role="group" aria-label="Garment">
+            <button id="tab-shirt" type="button" aria-pressed="true" data-file="shirt" title="Pick items for the shirt (torso and arms)">Shirt</button>
+            <button id="tab-pants" type="button" aria-pressed="false" data-file="pants" title="Pick items for the pants (legs and lower torso)">Pants</button>
+          </div>
           <button class="save alt" id="save-sc" type="button" disabled title="Save the front, back and side showcase of this outfit as a PNG">Download showcase</button>
         </div>
       </div>
