@@ -10,7 +10,7 @@ Artwork: Created by SkavenBlight & xLuckySam · Formatted by Smithingson · City
 
 ## Your own PNGs (for players)
 
-Players can press **Add PNG** under "Your items" to layer their own 585×559 PNGs on top of the generator items. The files stay in their browser, are never uploaded, and clear on reload.
+Players can press **Add PNG** under "Custom Shirt Layers" or "Custom Pants Layers" to layer their own 585×559 PNGs on top of the generator items. The ▲ ▼ arrows move a PNG up or down one layer at a time. The files stay in their browser, are never uploaded, and clear on reload.
 
 **Download layers** saves the ticked items (not the frame) as a .zip of full 585×559 PNGs, numbered from the bottom layer (01) up, in the same format the Drive folder and Add PNG accept.
 

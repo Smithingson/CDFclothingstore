@@ -74,6 +74,11 @@ canvas { display: block; width: 100%; height: auto; max-width: 100%; aspect-rati
 .add { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
 .add .msg { flex: 1 1 220px; min-width: 0; }
 .add .msg.err { color: var(--warn); }
+.order { display: flex; align-items: center; gap: 4px; font: 500 12px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.order button { font: 11px/1 var(--body); width: 24px; height: 22px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); color: var(--accent); cursor: pointer; }
+.order button:disabled { opacity: .35; cursor: default; }
+.order button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.order span { margin-left: 4px; }
 .remove, .link { justify-self: start; font: 13px/1.2 var(--body); background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; }
 .remove:focus-visible, .link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .skin { display: flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono); color: var(--muted); }
@@ -260,7 +265,7 @@ for (const f of ["shirt", "pants"]) {
       for (const s of g.sections) all.sections.push(Object.assign(s, { items: s.items.map(id => id + off), br: b }));
       for (const l of g.layers) all.layers.push(Object.assign(l, { id: l.id + off, br: b }));
     });
-    all.sections.push({ name: "Your items", items: [], custom: true });
+    all.sections.push({ name: f === "shirt" ? "Custom Shirt Layers" : "Custom Pants Layers", items: [], custom: true });
     M[f] = all;
     state.on[f] = new Set(all.layers.filter(l => l.on && !l.fixed && l.br === state.branch).map(l => l.id));
     for (const l of M[f].layers) Object.assign(l, parse(l.name));
@@ -287,11 +292,51 @@ function conflicts(f) {
   return pairs;
 }
 
-// Drawing order: this branch's items, then items borrowed from other branches, then the player's own PNGs, then this branch's frame.
+// Drawing order: this branch's items, then items borrowed from other branches, then this branch's frame.
+// The player's own PNGs sit just above their anchor item (null = bottom, TOP = above everything, the default);
+// PNGs sharing an anchor keep their order in M[f].layers.
+const TOP = "top";
 function stack(f) {
   const b = state.branch, on = state.on[f], L = M[f].layers;
-  const items = L.filter(l => !l.fixed && on.has(l.id));
-  return [...items.filter(l => l.br === b), ...items.filter(l => l.br && l.br !== b), ...items.filter(l => !l.br), ...L.filter(l => l.fixed && l.br === b)];
+  const base = [...L.filter(l => !l.fixed && !l.custom && l.br === b), ...L.filter(l => !l.fixed && !l.custom && l.br !== b)];
+  const pos = c => c.anchor === TOP ? Infinity : c.anchor == null ? -1 : base.findIndex(l => l.id === c.anchor);
+  const mine = L.filter(l => l.custom && on.has(l.id)).map((c, i) => [pos(c), i, c]).sort((p, q) => p[0] - q[0] || p[1] - q[1]);
+  const out = [];
+  let k = 0;
+  base.forEach((l, i) => {
+    while (k < mine.length && mine[k][0] < i) out.push(mine[k++][2]);
+    if (on.has(l.id)) out.push(l);
+  });
+  while (k < mine.length) out.push(mine[k++][2]);
+  return [...out, ...L.filter(l => l.fixed && l.br === b)];
+}
+
+// Move one of the player's PNGs up (+1) or down (-1) past the next shown layer.
+function moveCustom(f, c, dir) {
+  const S = stack(f).filter(l => !l.fixed), j = S.indexOf(c), L = M[f].layers;
+  if (j < 0 || !S[j + dir]) return;
+  const x = dir > 0 ? S[j + 1] : S[j - 2];          // c goes directly above x (x undefined = bottom)
+  L.splice(L.indexOf(c), 1);
+  if (x?.custom) {
+    c.anchor = x.anchor;
+    L.splice(L.indexOf(x) + 1, 0, c);
+  } else {
+    c.anchor = !x ? null : dir > 0 && j + 1 === S.length - 1 ? TOP : x.id;
+    const first = L.find(l => l.custom && l.anchor === c.anchor);
+    L.splice(first ? L.indexOf(first) : L.findIndex(l => l.fixed), 0, c);
+  }
+  update();
+}
+
+// "Layer n of m" next to each of the player's PNGs, and which arrows can move.
+function customPos() {
+  const f = state.file, S = stack(f).filter(l => !l.fixed);
+  document.querySelectorAll(".order[data-id]").forEach(el => {
+    const j = S.findIndex(l => l.id === +el.dataset.id);
+    el.querySelector("span").textContent = j < 0 ? "hidden" : `layer ${j + 1} of ${S.length}`;
+    el.querySelector(".up").disabled = j < 0 || j === S.length - 1;
+    el.querySelector(".down").disabled = j <= 0;
+  });
 }
 
 function draw() {
@@ -432,7 +477,21 @@ function renderList() {
         rm.textContent = "Remove";
         rm.title = "Remove this PNG from your outfit";
         rm.addEventListener("click", e => { e.preventDefault(); removeCustom(f, l.id); });
-        r.querySelector(".lbl").append(rm);
+        const ord = document.createElement("span");
+        ord.className = "order";
+        ord.dataset.id = l.id;
+        for (const [cls, sym, dir, tip] of [["up", "▲", 1, "Move this PNG up one layer"], ["down", "▼", -1, "Move this PNG down one layer"]]) {
+          const a = document.createElement("button");
+          a.type = "button";
+          a.className = cls;
+          a.textContent = sym;
+          a.title = tip;
+          a.setAttribute("aria-label", tip);
+          a.addEventListener("click", e => { e.preventDefault(); moveCustom(f, l, dir); });
+          ord.append(a);
+        }
+        ord.append(document.createElement("span"));
+        r.querySelector(".lbl").append(ord, rm);
         grid.append(r);
       }
       sec.append(sum, grid);
@@ -464,7 +523,7 @@ function renderList() {
   }
 }
 
-// Player's own PNGs: kept in this browser only (blob URLs), stacked above all items under the frame, gone on reload.
+// Player's own PNGs: kept in this browser only (blob URLs), added on top under the frame (movable with the arrows), gone on reload.
 let nextCustom = 5000;
 const addMsg = {};
 
@@ -503,7 +562,7 @@ async function addCustom(f, files) {
       URL.revokeObjectURL(url);
       continue;
     }
-    const l = Object.assign({ id: nextCustom++, name: file.name.replace(/\.png$/i, ""), x: 0, y: 0, on: true, group: null, src: url, custom: true }, parse(file.name.replace(/\.png$/i, "")));
+    const l = Object.assign({ id: nextCustom++, name: file.name.replace(/\.png$/i, ""), x: 0, y: 0, on: true, group: null, src: url, custom: true, anchor: TOP }, parse(file.name.replace(/\.png$/i, "")));
     const layers = M[f].layers;
     layers.splice(layers.findIndex(o => o.fixed), 0, l);
     M[f].sections.find(s => s.custom).items.push(l.id);
@@ -585,7 +644,7 @@ $("skin").addEventListener("input", e => {
   if (ok) { skin = v; drawShowcase(); }
 });
 
-function update() { draw(); status(); counts(); drawShowcase(); }
+function update() { draw(); status(); counts(); customPos(); drawShowcase(); }
 
 async function show(f) {
   state.file = f;
