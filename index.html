@@ -292,13 +292,13 @@ function conflicts(f) {
   return pairs;
 }
 
-// Drawing order: this branch's items, then items borrowed from other branches, then this branch's frame.
+// Drawing order: items left ticked from other branches, then this branch's items (so what you tick here shows), then this branch's frame.
 // The player's own PNGs sit just above their anchor item (null = bottom, TOP = above everything, the default);
 // PNGs sharing an anchor keep their order in M[f].layers.
 const TOP = "top";
 function stack(f) {
   const b = state.branch, on = state.on[f], L = M[f].layers;
-  const base = [...L.filter(l => !l.fixed && !l.custom && l.br === b), ...L.filter(l => !l.fixed && !l.custom && l.br !== b)];
+  const base = [...L.filter(l => !l.fixed && !l.custom && l.br !== b), ...L.filter(l => !l.fixed && !l.custom && l.br === b)];
   const pos = c => c.anchor === TOP ? Infinity : c.anchor == null ? -1 : base.findIndex(l => l.id === c.anchor);
   const mine = L.filter(l => l.custom && on.has(l.id)).map((c, i) => [pos(c), i, c]).sort((p, q) => p[0] - q[0] || p[1] - q[1]);
   const out = [];
